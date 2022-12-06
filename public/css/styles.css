@@ -88,6 +88,34 @@ footer li a{
     color: #f0f0f0;
 }
 
+/*Panel Admin*/
+
+.admin-button{
+    background: #f0f0f0;
+    color: #6c575d;
+    border: 2px solid #1f3c5c;
+    text-decoration: none;
+    padding: .8rem;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    border-radius: 10px;
+}
+
+#carrousel_images_form div{
+    padding-bottom: 1.5rem !important;
+}
+
+#carrousel_images_form div label{
+    width: 100%;
+    padding-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+#carrousel_images_form div input{
+    width: 100%;
+    padding-bottom: 0.5rem;
+}
+
 @media screen and (min-width: 768px){
     .owl-nav{
         display: block;

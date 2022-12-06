@@ -16,7 +16,7 @@ class CarrouselImages
     #[ORM\Column(length: 50)]
     private ?string $image = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 1000, nullable: true)]
     private ?string $link = null;
 
     #[ORM\Column(length: 255)]

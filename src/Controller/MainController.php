@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CarrouselImages;
 use App\Entity\DynamicContent;
 use App\Form\DynamicContentFormType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -12,11 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(): \Symfony\Component\HttpFoundation\Response
+    public function index(ManagerRegistry $doctrine, Request $request): \Symfony\Component\HttpFoundation\Response
     {
+        $carrouselImagesRepo = $doctrine->getRepository(CarrouselImages::class);
+        $carrouselImages = $carrouselImagesRepo->findAll();
 
 
-        return $this->render('main/home.html.twig');
+
+        return $this->render('main/home.html.twig', [
+            'carrouselImages' => $carrouselImages
+        ]);
     }
 
     #[Route('/contenu-dynamique/modifier/{title}', name: 'dynamic_content_edit', requirements: ["title" => "[a-z0-9_-]{2,50}"])]

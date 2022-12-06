@@ -9,8 +9,10 @@
 {% block body %}
 {#    Carrousel en banière #}
     <div class="owl-carousel owl-theme mt-5">
-        <div><img src="{{ asset('images/test1.jpg') }}" alt="" class="carrousel-img img-fluid"> </div>
-        <div><img src="{{ asset('images/test2.png') }}" alt="" class="carrousel-img img-fluid"> </div>
+        {% for carrouselImage in carrouselImages  %}
+{#            todo liipimagine pour normer les photos#}
+            <div><img src="{{ asset('images/carrousel_images/' ~ carrouselImage.image ) }}" alt="{{ carrouselImage.name }}" class="carrousel-img img-fluid"> </div>
+        {% endfor %}
     </div>
     
 {#    Texte de présentation #}
