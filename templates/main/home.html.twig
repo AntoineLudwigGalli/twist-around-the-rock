@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ site_name }}{% endblock %}
+{% block cssIncludes %}
+    <link rel="stylesheet" href="{{ asset('libraries/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css') }}">
+    
+{% endblock %}
+
+{% block body %}
+{#    Carrousel en banière #}
+    <div class="owl-carousel owl-theme mt-5">
+        <div><img src="{{ asset('images/test1.jpg') }}" alt="" class="carrousel-img img-fluid"> </div>
+        <div><img src="{{ asset('images/test2.png') }}" alt="" class="carrousel-img img-fluid"> </div>
+    </div>
+    
+{#    Texte de présentation #}
+    <div class="row">
+        <div class="presentation-text col-10 offset-1">
+            <p class="my-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere maiores minima molestias mollitia nisi possimus quibusdam ratione sunt veritatis! Ducimus explicabo maiores nesciunt numquam ullam! Aspernatur esse illo obcaecati perferendis.</p>
+        </div>
+    </div>
+    
+{#    Articles à la une #}
+    <div class="row top-articles">
+        <ul class="d-flex flex-column align-items-center justify-content-center m-0 p-0">
+            <li class="col-8 offset-2 mx-0 my-3 text-center">
+                <img src="{{ asset('images/test1.jpg') }}" alt="">
+                <a href="#">Voir +</a>
+            </li>
+            <li class="col-8 offset-2 mx-0 my-3 text-center">
+                <img src="{{ asset('images/test2.png') }}" alt="">
+                <a href="#">Voir +</a>
+            </li>
+            <li class="col-8 offset-2 mx-0 my-3 text-center">
+                <img src="{{ asset('images/test1.jpg') }}" alt="">
+                <a href="#">Voir +</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block jsIncludes %}
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous">
+    </script>
+    <script src="{{ asset('libraries/OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/owl-carrousel-custom-settings.js') }}"></script>
+    
+{% endblock %}
+

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{#    todo : remplir les meta descriptions#}
+    <meta name="description" content="" />
+    <meta name="keywords" content="">
+    <meta property=”og:title” content="Twist Around the Rock">
+    <meta property=”og:type” content=”siteweb” />
+    <meta property=”og:url” content=”” />
+    <meta property="og:description" content="" />
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    {% block cssIncludes %}{% endblock %}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+</head>
+<body>
+
+    <div class="container-fluid">
+        {% include 'partials/header.html.twig' %}
+        {% include 'partials/flashes.html.twig' %}
+        
+        {% block body %}{% endblock %}
+    
+        {% include 'partials/footer.html.twig' %}
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+{% block jsIncludes %}{% endblock %}
+<script src="{{ asset('js/script.js') }}"></script>
+
+</body>
+</html>
