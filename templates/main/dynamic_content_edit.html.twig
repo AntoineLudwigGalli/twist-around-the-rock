@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block title %}Modifier le contenu{% endblock %}
+
+{% block body %}
+    
+        
+        <div class="row">
+            <h1 class="col-10 offset-1 text-center my-5">Modifier le contenu</h1>
+        </div>
+        
+        <div class="row">
+            <div class="col-10 offset-1">
+                {{ form(form) }}
+                <a href="{{ path('main_home') }}" class="btn btn-danger ">Retour</a>
+            </div>
+        </div>
+    
+{% endblock %}
