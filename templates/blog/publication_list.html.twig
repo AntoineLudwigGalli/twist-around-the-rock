@@ -53,8 +53,12 @@
                             
                             <div class="card-body">
                                 {% if article.image != null %}
-                                    <img src="{{ asset('images/article_images/' ~ article.image) }}" alt="Image de couverture de l'article {{ article.title }}" class="article-image-thumbnail col-10 offset-1 img-fluid img-thumbnail">
+                                    <a href="{{ path('blog_publication_view', {'id': article.id, 'slug': article.slug
+                                    }) }}" class="link-style">
+                                        <img src="{{ asset('images/article_images/' ~ article.image) }}" alt="Image de couverture de l'article {{ article.title }}" class="article-image-thumbnail col-10 offset-1 img-fluid img-thumbnail">
+                                    </a>
                                 {% endif %}
+                                
                                 <div class="mb-2">{{ article.content|striptags|excerpt(100) }}
                                     <a class="link-style italic" href="{{ path ('blog_publication_view', {'id': article.id, 'slug': article.slug }) }}">
                                         ...Lire la suite</a>

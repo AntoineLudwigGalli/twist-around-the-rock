@@ -46,7 +46,10 @@
                                 
                                 {% for article in articles %}
                                     <tr>
-                                        <td class="text-light text-center">{{ article.title }}</td>
+                                        <td class="text-light text-center">
+                                            <a href="{{ path('blog_publication_view', {'id': article.id, 'slug': article.slug}) }}">{{ article.title }}
+                                            </a>
+                                        </td>
                                         <td class="text-light text-center">{{ article.content|striptags|excerpt(20) }}</td>
                                         
                                        
