@@ -11,7 +11,7 @@
     <div class="owl-carousel owl-theme mt-5">
         {% for carrouselImage in carrouselImages  %}
 {#            todo liipimagine pour normer les photos#}
-            <div><img src="{{ asset('images/carrousel_images/' ~ carrouselImage.image ) }}" alt="{{ carrouselImage.name }}" class="carrousel-img img-fluid"> </div>
+            <a href="{{ (carrouselImage.link != null) ? carrouselImage.link : '#' }}"><img src="{{ asset('images/carrousel_images/' ~ carrouselImage.image) }}" alt="{{ carrouselImage.name }}" class="carrousel-img img-fluid"> </a>
         {% endfor %}
     </div>
     

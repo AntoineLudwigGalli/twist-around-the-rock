@@ -24,7 +24,7 @@
                     
                     {# Affichage nb d'articles #}
                     <div class="row">
-                        <p class="col-12 text-center">Nombre total d'articles
+                        <p class="col-12 text-center text-light">Nombre total d'articles
                             : {{ carrouselImages.getTotalItemCount() }}</p>
                     </div>
                     
@@ -36,7 +36,6 @@
                             <table class="align-middle table table-sm table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th class="text-center" scope="col">{{ knp_pagination_sortable(carrouselImages, 'ID ', 'ci.id') }}</th>
                                         <th class="text-center" scope="col">{{ knp_pagination_sortable(carrouselImages, 'Nom ', 'ci.name') }}</th>
                                         <th class="text-center" scope="col">{{ knp_pagination_sortable(carrouselImages, 'Article relié', 'ci.link') }}</th>
                                         <th class="text-center" scope="col">{{ knp_pagination_sortable(carrouselImages, 'Image', 'ci.image') }}</th>
@@ -46,27 +45,35 @@
                                 
                                 {% for carrouselImage in carrouselImages %}
                                     <tr>
-                                        <td class="text-light">{{ carrouselImage.id }}</td>
                                         <td class="text-light">{{ carrouselImage.name }}</td>
                                         <td class="text-light">{{ carrouselImage.link }}</td>
                                         <td>
-                                            <img src="{{ asset('images/carrousel_images/'~ carrouselImage.image) }}" alt="{{ carrouselImage.name }}" class="img-fluid
-                                    img-thumbnail">
+                                            <img src="{{ asset('images/carrousel_images/'~ carrouselImage.image) }}" alt="{{ carrouselImage.name }}" class="img-fluid img-thumbnail">
                                         </td>
                                         <td>
-{#                                            <div>#}
-{#                                                #}
-{#                                                <a class="text-decoration-none text-warning me-3" href="{{ path('admin_panel_article_edit', {'id': article.id}) }}"> <i class="fa-solid fa-pen-to-square"></i> Modifier#}
-{#                                                </a>#}
-{#                                            #}
-{#                                            </div>#}
-{#                                            <div class="mt-3">#}
-{#                                                <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette émission ?')" href="{{ path('admin_panel_article_delete', {'id': article.id, 'csrf_token' : csrf_token('admin_article_delete' ~ article.id)}) }}" class=" text-decoration-none#}
-{#                                                text-danger"> <i#}
-{#                                                            class="fa-solid fa-trash-can"></i>Supprimer </a>#}
-{#                                            </div>#}
-{#                                        </td>#}
-{#                                        <td><td><a href="{{ path('news_article_view', {'id': article.id, 'slug': article.slug}) }}" class="btn btn-primary mx-2"><i class="fa-solid fa-arrow-right"></i></a></td>#}
+                                            <div>
+                                                
+                                                <a class="text-decoration-none text-warning me-3 d-md-none" href="{{ path('admin_edit_carrousel_image', {'id': carrouselImage.id}) }}"> <i class="fa-solid fa-pen-to-square"></i>
+                                                </a>
+                                                <a class="text-decoration-none text-warning me-3 d-none d-md-block" href="{{ path('admin_edit_carrousel_image', {'id': carrouselImage.id}) }}"> <i class="fa-solid fa-pen-to-square"></i>
+                                                    Modifier
+                                                </a>
+                                            
+                                            </div>
+                                            <div class="mt-3">
+                                                <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette image du carrousel d\'accueil ?')"
+                                                href="{{ path('admin_delete_carrousel_image', {'id': carrouselImage.id, 'csrf_token' : csrf_token('admin_delete_carrousel_image' ~ carrouselImage.id)}) }}"
+                                                class=" text-decoration-none text-danger d-md-none">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </a>
+                                                <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette image du carrousel d\'accueil ?')"
+                                                        href="{{ path('admin_delete_carrousel_image', {'id': carrouselImage.id, 'csrf_token' : csrf_token('admin_delete_carrousel_image' ~ carrouselImage.id)}) }}"
+                                                        class=" text-decoration-none text-danger d-none d-md-block">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                    Supprimer
+                                                </a>
+                                            </div>
+                                        </td>
                                     </tr>
                                 
                                 {% endfor %}

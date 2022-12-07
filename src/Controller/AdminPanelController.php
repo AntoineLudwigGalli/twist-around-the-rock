@@ -112,4 +112,88 @@ class AdminPanelController extends AbstractController
             'form' => $form->createView(),
             ]);
     }
+
+    #[Route('/admin/carrousel-images/supprimer-une-image/{id}', name: 'admin_delete_carrousel_image', priority: 10)]
+    public function carrouselImageDelete(CarrouselImages $carrouselImages, Request $request, ManagerRegistry $doctrine): Response
+    {
+
+//        Token
+        $csrfToken = $request->query->get('csrf_token', '');
+
+        if (!$this->isCsrfTokenValid('admin_delete_carrousel_image' . $carrouselImages->getId(), $csrfToken)) {
+
+            $this->addFlash('error', 'Token de sécurité invalide, veuillez ré-essayer.');
+
+        }
+        else {
+            // Suppression de l'image en BDD
+            $em = $doctrine->getManager();
+            $em->remove($carrouselImages);
+            $em->flush();
+
+            // Message flash de succès
+            $this->addFlash('success', "L'image a été supprimé avec succès du carrousel d'accueil !");
+        }
+        // Redirection vers la page qui liste les events
+        return $this->redirectToRoute('admin_carrousel_images_list');
+    }
+
+    /**
+     *
+     *
+     */
+    #[Route('/admin/carrousel-images/modifier-une-image/{id}', name: 'admin_edit_carrousel_image', priority: 10)]
+    public function carrouselImageEdit(CarrouselImages $carrouselImages, Request $request, ManagerRegistry $doctrine): Response
+    {
+
+
+        $form = $this->createForm(CarrouselImagesFormType::class, $carrouselImages);
+
+        //instanciation d\'un formulaire
+        $form->handleRequest($request);
+
+        //Verif du formulaire
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $image = $form->get('image')->getData();
+
+            if(
+                $carrouselImages->getImage() != null &&
+                file_exists($this->getParameter('app.carrousel.image.folder') . $carrouselImages->getImage() )
+            ){
+                unlink($this->getParameter('app.carrousel.image.folder') . $carrouselImages->getImage() );
+            }
+
+
+            /*Génération nom*/
+            do{
+                $newFileName = md5( random_bytes(100) ) . '.' . $image->guessExtension();
+            } while (file_exists($this->getParameter('app.carrousel.image.folder') .$newFileName));
+
+            $carrouselImages->setImage($newFileName);
+
+            $em = $doctrine->getManager();
+            $em->flush();
+
+            $image -> move(
+                $this->getParameter('app.carrousel.image.folder'),
+                $newFileName,
+            );
+
+            // Message flash de succès
+            $this->addFlash('success', 'Image modifiée avec succès !');
+
+            // Redirection vers la liste des évènements contenant maintenant l'évènement modifié
+            return $this->redirectToRoute('admin_carrousel_images_list', [
+                'id' => $carrouselImages->getId(),
+                ]);
+
+        }
+
+        return $this->render('admin_panel/edit_carrousel_images.html.twig', [
+            'form' => $form->createView(),
+            ]);
+
+    }
+
 }
