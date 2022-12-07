@@ -6,6 +6,7 @@
 parameters:
   app.sitename: 'Twist Around the Rock'
   app.carrousel.image.folder: '%kernel.project_dir%/public/images/carrousel_images/'
+  app.article.image.folder: '%kernel.project_dir%/public/images/article_images/'
 
 services:
     # default configuration for services in *this* file

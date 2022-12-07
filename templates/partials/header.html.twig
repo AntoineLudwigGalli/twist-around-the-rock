@@ -39,7 +39,13 @@
                 </li>
                 {% if app.user and app.user.roles[0] == "ROLE_ADMIN" %}
                     <li class="nav-item mx-auto">
-                        <a class="nav-link active" aria-current="page" href="{{ path('admin_logout') }}">
+                        <a class="nav-link active text-dark" aria-current="page" href="{{ path('admin_panel') }}">
+                            Panel Admin
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item mx-auto">
+                        <a class="nav-link active text-dark" aria-current="page" href="{{ path('admin_logout') }}">
                             Déconnexion
                         </a>
                     </li>

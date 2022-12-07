@@ -18,7 +18,7 @@ nav{
 
 .navbar-nav{
     position: absolute;
-    background: rgba(240, 240, 240, 0.85);
+    background: rgba(240, 240, 240, 0.95);
     border-radius: 10px;
     padding-bottom: 1rem;
     padding-top: 1rem;
@@ -105,16 +105,24 @@ footer li a{
     padding-bottom: 1.5rem !important;
 }
 
-#carrousel_images_form div label{
+#carrousel_images_form div label, #article_form div label{
     width: 100%;
     padding-bottom: 0.5rem;
     font-weight: bold;
 }
 
-#carrousel_images_form div input{
+#carrousel_images_form div input, #article_form div input{
     width: 100%;
     padding-bottom: 0.5rem;
 }
+
+/*Blog*/
+
+.link-style.back{
+    text-decoration: none;
+    color: white;
+}
+
 
 @media screen and (min-width: 768px){
     .owl-nav{

@@ -19,12 +19,15 @@ class AdminPanelController extends AbstractController
         $em = $doctrine->getManager();
 
         $query = $em->createQuery('SELECT ci FROM App\Entity\CarrouselImages ci ');
-
         $carrouselImages = $paginator->paginate($query, 55);
+
+        $query = $em->createQuery('SELECT a FROM App\Entity\Article a');
+        $articles = $paginator->paginate($query, 55);
 
         return $this->render('admin_panel/home.html.twig', [
             'controller_name' => 'AdminPanelController',
-            'carrouselImages' => $carrouselImages
+            'carrouselImages' => $carrouselImages,
+            'articles' => $articles
 
         ]);
     }
@@ -193,7 +196,34 @@ class AdminPanelController extends AbstractController
         return $this->render('admin_panel/edit_carrousel_images.html.twig', [
             'form' => $form->createView(),
             ]);
+    }
 
+    #[Route('/admin/blog/liste', name: 'admin_blog_articles_list')]
+    public function admin_blog_articles_list(ManagerRegistry $doctrine, Request $request, PaginatorInterface $paginator): Response
+    {
+        // On récupère dans l'URL la donnée GET page (si elle n'existe pas, la valeur retournée par défaut sera la page 1)
+        $requestedPage = $request->query->getInt('page', 1);
+
+        // Si le numéro de page demandé dans l'URL est inférieur à 1, erreur 404
+        if ($requestedPage < 1) {
+            throw new NotFoundHttpException();
+        }
+        // Récupération du manager des entités
+        $em = $doctrine->getManager();
+
+        // Création d'une requête qui servira au paginator pour récupérer les images de la page courante
+        $query = $em->createQuery('SELECT a FROM App\Entity\Article a  ORDER BY a.publicationDate ASC');
+
+        //On stocke dans $carrouselImages les 10 images de la page demandée dans l'URL
+        $articles = $paginator->paginate(
+            $query, // Requête de selection des émissions en BDD
+            $requestedPage, // Numéro de la page dont on veut les émissions
+            10); // Nombre d'émissions par page
+
+        return $this->render('admin_panel/blog-articles-list.html.twig', [
+            'controller_name' => 'AdminPanelController',
+            'articles' => $articles,
+        ]);
     }
 
 }

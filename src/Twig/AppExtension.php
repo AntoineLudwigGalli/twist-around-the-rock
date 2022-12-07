@@ -9,6 +9,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 
@@ -57,5 +58,28 @@ class AppExtension extends AbstractExtension
             //Sinon, on affiche le contenu dynamique
             return (empty($currentDynamicContent) ? '' : $this->purifier->purify($currentDynamicContent->getContent()));
         }
+    }
+
+
+//    Excerpt fonction Twig (maison)
+    public function getFilters(): array
+    {
+        return [
+            new TwigFilter('excerpt', [$this, 'excerpt']),
+        ];
+    }
+
+    /**
+     * Filtre maison pour tronquer une chaîne à un certain nombre de mots
+     */
+    public function excerpt(string $text, int $nbWords): string
+    {
+        $arrayText = explode(' ', $text, ($nbWords + 1));
+
+        if(count ($arrayText) > $nbWords){
+            array_pop($arrayText);
+            return implode(' ', $arrayText) . '...';
+        }
+        return $text;
     }
 }
