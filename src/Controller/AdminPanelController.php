@@ -167,22 +167,27 @@ class AdminPanelController extends AbstractController
                 unlink($this->getParameter('app.carrousel.image.folder') . $carrouselImages->getImage() );
             }
 
+            if ($image == null){
 
-            /*Génération nom*/
-            do{
-                $newFileName = md5( random_bytes(100) ) . '.' . $image->guessExtension();
-            } while (file_exists($this->getParameter('app.carrousel.image.folder') .$newFileName));
+                $em = $doctrine->getManager();
+                $em->flush();
 
-            $carrouselImages->setImage($newFileName);
+            } else {
+                /*Génération nom*/
+                do {
+                    $newFileName = md5(random_bytes(100)) . '.' . $image->guessExtension();
+                } while (file_exists($this->getParameter('app.carrousel.image.folder') . $newFileName));
 
-            $em = $doctrine->getManager();
-            $em->flush();
+                $carrouselImages->setImage($newFileName);
 
-            $image -> move(
-                $this->getParameter('app.carrousel.image.folder'),
-                $newFileName,
-            );
+                $em = $doctrine->getManager();
+                $em->flush();
 
+                $image->move(
+                    $this->getParameter('app.carrousel.image.folder'),
+                    $newFileName,
+                );
+            }
             // Message flash de succès
             $this->addFlash('success', 'Image modifiée avec succès !');
 

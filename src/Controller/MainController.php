@@ -6,6 +6,7 @@ use App\Entity\CarrouselImages;
 use App\Entity\DynamicContent;
 use App\Form\DynamicContentFormType;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,15 +14,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(ManagerRegistry $doctrine, Request $request): \Symfony\Component\HttpFoundation\Response
+    public function index(ManagerRegistry $doctrine, PaginatorInterface $paginator, Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $carrouselImagesRepo = $doctrine->getRepository(CarrouselImages::class);
         $carrouselImages = $carrouselImagesRepo->findAll();
 
+// Affichage du dernier article de blog
+        $requestedPage = $request->query->getInt('page', 1);
 
+        $em = $doctrine->getManager();
+
+        $query = $em->createQuery('SELECT a FROM App\Entity\Article a ORDER BY a.publicationDate DESC');
+        $articles = $paginator->paginate($query, //Requête créée juste avant
+            $requestedPage, // Page qu'on souhaite voir
+            1, // Nombre d'articles à afficher par page
+        );
 
         return $this->render('main/home.html.twig', [
-            'carrouselImages' => $carrouselImages
+            'carrouselImages' => $carrouselImages,
+            'articles' => $articles,
+
         ]);
     }
 
@@ -62,6 +74,5 @@ class MainController extends AbstractController
         return $this->render('main/dynamic_content_edit.html.twig', [
             'form' => $form->createView(),]);
     }
-
 
 }
