@@ -48,7 +48,7 @@
         {% if article.image != null %}
             <a href="{{ path('blog_publication_view', {'id': article.id, 'slug': article.slug
             }) }}" class="link-style">
-                <img src="{{ asset('images/article_images/' ~ article.image) }}" alt="Image de couverture de l'article {{ article.title }}" class="article-image-thumbnail col-10 offset-1 img-fluid img-thumbnail">
+                <img src="{{ asset('images/article_images/' ~ article.image) }}" alt="Image de couverture de l'article {{ article.title }}" class="article-image-thumbnail col-10 offset-1 img-fluid">
             </a>
         {% endif %}
     

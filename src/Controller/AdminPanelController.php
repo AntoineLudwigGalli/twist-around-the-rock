@@ -160,12 +160,7 @@ class AdminPanelController extends AbstractController
 
             $image = $form->get('image')->getData();
 
-            if(
-                $carrouselImages->getImage() != null &&
-                file_exists($this->getParameter('app.carrousel.image.folder') . $carrouselImages->getImage() )
-            ){
-                unlink($this->getParameter('app.carrousel.image.folder') . $carrouselImages->getImage() );
-            }
+
 
             if ($image == null){
 
@@ -173,6 +168,12 @@ class AdminPanelController extends AbstractController
                 $em->flush();
 
             } else {
+                if(
+                    $carrouselImages->getImage() != null &&
+                    file_exists($this->getParameter('app.carrousel.image.folder') . $carrouselImages->getImage() )
+                ){
+                    unlink($this->getParameter('app.carrousel.image.folder') . $carrouselImages->getImage() );
+                }
                 /*Génération nom*/
                 do {
                     $newFileName = md5(random_bytes(100)) . '.' . $image->guessExtension();

@@ -76,9 +76,7 @@ class BlogController extends AbstractController {
     #[Route('/{id}/{slug}/', name: 'publication_view')]
     #[ParamConverter('article', options: ['mapping' => ['id' => 'id', 'slug' => 'slug']])]
     public function publicationView(Article $article, Request $request, ManagerRegistry $doctrine): Response {
-        if (!$this->getUser()) {
-            return $this->render('blog/publication_view.html.twig', ['article' => $article,]);
-        }
+
 
         return $this->render('blog/publication_view.html.twig', [
             'article' => $article,
