@@ -46,14 +46,14 @@ class Product
     private ?string $content = null;
 
 
-    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'products')]
-    private Collection $categories;
-
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Color $color = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Stone $stone = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Category $category = null;
 
     public function __construct()
     {
@@ -178,29 +178,7 @@ class Product
 
 
 
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
 
-    public function addCategory(Category $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): self
-    {
-        $this->categories->removeElement($category);
-
-        return $this;
-    }
 
     public function getColor(): ?Color
     {
@@ -222,6 +200,18 @@ class Product
     public function setStone(?Stone $stone): self
     {
         $this->stone = $stone;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

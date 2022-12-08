@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -43,8 +44,60 @@ class ProductRepository extends ServiceEntityRepository
      * Retourne les produits filtrés ou recherchés
      * @return Product[]
      */
-public function findSearch() :array
-{
-    return $this->findAll();
-}
+    public function findSearch(SearchData $search) :array
+    {
+        $query = $this
+            ->createQueryBuilder('p')
+
+        ;
+
+        if (!empty($search->q)) {
+            $query = $query
+                ->andWhere('p.name LIKE :q')
+                ->setParameter('q', "%{$search->q}%");
+        }
+
+        if (!empty($search->min)) {
+            $query = $query
+                ->andWhere('p.price >= :min')
+                ->setParameter('min', $search->min);
+        }
+
+        if (!empty($search->max)) {
+            $query = $query
+                ->andWhere('p.price <= :max')
+                ->setParameter('max', $search->max);
+        }
+
+        if (!empty($search->available)) {
+            $query = $query
+                ->andWhere('p.available = 1');
+        }
+
+        if (!empty($search->categories)) {
+            $query = $query
+                ->select('c', 'p')
+                ->join('p.category', 'c')
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $search->categories);
+        }
+
+        if (!empty($search->colors)) {
+            $query = $query
+                ->select('co', 'p')
+                ->join('p.color', 'co')
+                ->andWhere('co.id IN (:colors)')
+                ->setParameter('colors', $search->colors);
+        }
+
+        if (!empty($search->stones)) {
+            $query = $query
+                ->select('s', 'p')
+                ->join('p.stone', 's')
+                ->andWhere('s.id IN (:stones)')
+                ->setParameter('stones', $search->stones);
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

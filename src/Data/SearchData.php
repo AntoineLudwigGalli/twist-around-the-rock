@@ -8,10 +8,8 @@ use App\Entity\Stone;
 
 class SearchData
 {
-    /**
-     * @var string
-     */
-    public string $q = '';
+
+    public $q = ' ';
 
     /**
      * @var Category[]

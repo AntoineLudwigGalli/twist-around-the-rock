@@ -22,70 +22,22 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProductController extends AbstractController
 {
     #[Route('/', name: '')]
-    public function productsList(ManagerRegistry $doctrine, Request $request, ProductRepository $repository): Response
+    public function productsList(Request $request, ProductRepository $repository): Response
     {
         $data = new SearchData();
-        $form = $this->createForm(SearchFormType::class, $data);
-        $products = $repository->findSearch();
 
-//        $requestedPage = $request->query->getInt('page', 1);
-//
-//        if ($requestedPage < 1) {
-//            throw new NotFoundHttpException();
-//        }
-//
-//        $em = $doctrine->getManager();
-//
-//        $query = $em->createQuery('SELECT p FROM App\Entity\Product p ORDER BY p.creationDate DESC');
-//        $products = $paginator->paginate($query, //Requête créée juste avant
-//            $requestedPage, // Page qu'on souhaite voir
-//            8, // Nombre d'articles à afficher par page
-//        );
+        $form = $this->createForm(SearchFormType::class, $data);
+        $form->handleRequest($request);
+
+        $products = $repository->findSearch($data);
+
+
         return $this->render('product/products_list.html.twig', [
-            'controller_name' => 'ProductController',
             'products' => $products,
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/recherche/', name: 'search')]
-    public function search(Request $request, PaginatorInterface $paginator, ManagerRegistry $doctrine): Response
-    {
-
-        // Récupération du numéro de la page demandée dans l'url (si il existe pas, 1 sera pris à la place)
-        $requestedPage = $request->query->getInt('page', 1);
-
-        // Si la page demandée est inférieur à 1, erreur 404
-        if ($requestedPage < 1) {
-            throw new NotFoundHttpException();
-        }
-
-        // On récupère la recherche de l'utilisateur depuis l'url ($_GET['q'])
-        $search = $request->query->get('s', '');
-
-        // Récupération du manager général des entités
-        $em = $doctrine->getManager();
-
-        // Création d'une requête permettant de récupérer les produits pour la page actuelle, dont le titre ou le contenu contient la recherche de l'utilisateur
-        $query = $em
-            ->createQuery('SELECT p FROM App\Entity\Product p WHERE p.name LIKE :search OR p.content LIKE :search ORDER BY p.creationDate DESC')
-            ->setParameters([
-                'search' => '%' . $search . '%',
-            ])
-        ;
-
-        // Récupération des produits
-        $products = $paginator->paginate(
-            $query,
-            $requestedPage,
-            10
-        );
-
-        // Appel de la vue en lui envoyant les produits à afficher
-        return $this->render('product/list_search.html.twig', [
-            'products' => $products,
-        ]);
-    }
 
     /**
      * Contrôleur de la page permettant de voir un produit en détail (via ID et slug dans l'URL)
