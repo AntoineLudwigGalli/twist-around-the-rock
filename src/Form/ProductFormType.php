@@ -174,7 +174,7 @@ class ProductFormType extends AbstractType
             ])
 
             ->add('save', SubmitType::class, [
-                'label' => 'Créer le produit',
+                'label' => 'Valider',
                 'attr' => [
                     'class' => 'btn btn-primary w-100 mt-3',
                 ]

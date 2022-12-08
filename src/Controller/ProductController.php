@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/produits', name: 'products_')]
@@ -48,7 +49,7 @@ class ProductController extends AbstractController
         $requestedPage = $request->query->getInt('page', 1);
 
         // Si la page demandée est inférieur à 1, erreur 404
-        if($requestedPage < 1){
+        if ($requestedPage < 1) {
             throw new NotFoundHttpException();
         }
 
@@ -60,14 +61,14 @@ class ProductController extends AbstractController
 
         // Création d'une requête permettant de récupérer les produits pour la page actuelle, dont le titre ou le contenu contient la recherche de l'utilisateur
         $query = $em
-            ->createQuery('SELECT p FROM App\Entity\Product p WHERE p.title LIKE :search OR p.content LIKE :search ORDER BY p.creationDate DESC')
+            ->createQuery('SELECT p FROM App\Entity\Product p WHERE p.name LIKE :search OR p.content LIKE :search ORDER BY p.creationDate DESC')
             ->setParameters([
                 'search' => '%' . $search . '%',
             ])
         ;
 
         // Récupération des produits
-        $articles = $paginator->paginate(
+        $products = $paginator->paginate(
             $query,
             $requestedPage,
             10
@@ -75,7 +76,7 @@ class ProductController extends AbstractController
 
         // Appel de la vue en lui envoyant les produits à afficher
         return $this->render('product/list_search.html.twig', [
-            'articles' => $articles,
+            'products' => $products,
         ]);
     }
 
@@ -85,7 +86,8 @@ class ProductController extends AbstractController
 
     #[Route('/{id}/{slug}/', name: 'view')]
     #[ParamConverter('product', options: ['mapping' => ['id' => 'id', 'slug' => 'slug']])]
-    public function publicationView(Product $product, Request $request, ManagerRegistry $doctrine): Response {
+    public function publicationView(Product $product, Request $request, ManagerRegistry $doctrine): Response
+    {
 
         return $this->render('product/product_view.html.twig', [
             'article' => $product,
@@ -99,12 +101,14 @@ class ProductController extends AbstractController
      */
     #[Route("/suppression/{id}/", name: 'delete', priority: 10)]
     #[isGranted("ROLE_ADMIN")]
-    public function publicationDelete(Product $product, Request $request, ManagerRegistry $doctrine): Response {
+    public function publicationDelete(Product $product, Request $request, ManagerRegistry $doctrine): Response
+    {
         $csrfToken = $request->query->get('csrf_token', '');
 
         if (!$this->isCsrfTokenValid('product_delete_' . $product->getId(), $csrfToken)) {
             $this->addFlash('error', 'Token de sécurité invalide, veuillez ré-essayer');
-        } else {
+        }
+        else {
 
             $em = $doctrine->getManager();
             $em->remove($product);
@@ -123,7 +127,8 @@ class ProductController extends AbstractController
      */
     #[Route("/modifier/{id}/", name: 'edit', priority: 10)]
     #[isGranted("ROLE_ADMIN")]
-    public function productEdit(Product $product, Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response {
+    public function productEdit(Product $product, Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
+    {
 
         $form = $this->createForm(ProductFormType::class, $product);
 
@@ -137,18 +142,22 @@ class ProductController extends AbstractController
             $illustrationImageRight = $form->get('illustrationImageRight')->getData();
             $illustrationImageLeft = $form->get('illustrationImageLeft')->getData();
 
-            if ($coverImage == null && $illustrationImageRight == null && $illustrationImageLeft == null){
+            if ($coverImage == null && $illustrationImageRight == null && $illustrationImageLeft == null) {
 
                 $em = $doctrine->getManager();
                 $em->flush();
 
-            } else {
+            }
+            else {
+                if ($coverImage != null) {
+                    if (
+                        $product->getcoverImage() != null &&
+                        file_exists($this->getParameter('app.product.image.folder') . $product->getcoverImage())
+                    ) {
+                        unlink($this->getParameter('app.product.image.folder') . $product->getcoverImage());
+                    }
 
-                if (
-                    $product->getcoverImage() != null &&
-                    file_exists($this->getParameter('app.product.image.folder') . $product->getcoverImage())
-                ) {
-                    unlink($this->getParameter(' app.product.image.folder') . $product->getcoverImage());
+
                     /*Génération nom*/
                     do {
                         $newFileName = md5(random_bytes(100)) . '.' . $coverImage->guessExtension();
@@ -162,12 +171,13 @@ class ProductController extends AbstractController
                     );
                 }
 
-                if (
-                    $product->getIllustrationImageRight() != null &&
-                    file_exists($this->getParameter(' app.product.image.folder') . $product->getIllustrationImageRight())
-                ) {
-                    unlink($this->getParameter(' app.product.image.folder') . $product->getIllustrationImageRight());
-
+                if ($illustrationImageRight != null) {
+                    if (
+                        $product->getIllustrationImageRight() != null &&
+                        file_exists($this->getParameter('app.product.image.folder') . $product->getIllustrationImageRight())
+                    ) {
+                        unlink($this->getParameter('app.product.image.folder') . $product->getIllustrationImageRight());
+                    }
                     /*Génération nom*/
                     do {
                         $newFileName2 = md5(random_bytes(100)) . '.' . $illustrationImageRight->guessExtension();
@@ -181,11 +191,15 @@ class ProductController extends AbstractController
                     );
                 }
 
-                if (
-                    $product->getIllustrationImageLeft() != null &&
-                    file_exists($this->getParameter(' app.product.image.folder') . $product->getIllustrationImageLeft())
-                ) {
-                    unlink($this->getParameter(' app.product.image.folder') . $product->getIllustrationImageLeft());
+
+                if ($illustrationImageLeft != null) {
+                    if (
+                        $product->getIllustrationImageLeft() != null &&
+                        file_exists($this->getParameter('app.product.image.folder') . $product->getIllustrationImageLeft())
+                    ) {
+                        unlink($this->getParameter('app.product.image.folder') . $product->getIllustrationImageLeft());
+                    }
+
                     /*Génération nom*/
                     do {
                         $newFileName3 = md5(random_bytes(100)) . '.' . $illustrationImageLeft->guessExtension();
@@ -198,25 +212,25 @@ class ProductController extends AbstractController
                         $newFileName3,
                     );
                 }
-
-                $em = $doctrine->getManager();
-                $em->flush();
-
             }
+
+            $em = $doctrine->getManager();
+            $em->flush();
+
+
             $this->addFlash('success', 'Produit modifié avec succès');
             return $this->redirectToRoute('products_view', [
                 'id' => $product->getId(),
                 'slug' => $product->getSlug(),]);
         }
 
-        return $this->render('product/product_edit.html.twig', [
-            'form' => $form->createView(),
-            ]);
+        return $this->render('product/product_edit.html.twig', ['form' => $form->createView(),]);
     }
 
     #[Route('/nouveau-produit/', name: 'new_product')]
     #[isGranted('ROLE_ADMIN')]
-    public function newProduct(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response {
+    public function newProduct(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
+    {
         $product = new Product();
 
         $form = $this->createForm(ProductFormType::class, $product);
@@ -230,65 +244,65 @@ class ProductController extends AbstractController
             $illustrationImageRight = $form->get('illustrationImageRight')->getData();
             $illustrationImageLeft = $form->get('illustrationImageLeft')->getData();
 
-                if (
-                    $coverImage != null
-                ) {
-                    /*Génération nom*/
-                    do {
-                        $newFileName = md5(random_bytes(100)) . '.' . $coverImage->guessExtension();
-                    } while (file_exists($this->getParameter('app.product.image.folder') . $newFileName));
+            if (
+                $coverImage != null
+            ) {
+                /*Génération nom*/
+                do {
+                    $newFileName = md5(random_bytes(100)) . '.' . $coverImage->guessExtension();
+                } while (file_exists($this->getParameter('app.product.image.folder') . $newFileName));
 
-                    $product->setCoverImage($newFileName);
+                $product->setCoverImage($newFileName);
 
-                    $coverImage->move(
-                        $this->getParameter('app.product.image.folder'),
-                        $newFileName,
-                    );
-                }
-
-                if (
-                    $illustrationImageRight != null
-                ) {
-
-                    /*Génération nom*/
-                    do {
-                        $newFileName2 = md5(random_bytes(100)) . '.' . $illustrationImageRight->guessExtension();
-                    } while (file_exists($this->getParameter('app.product.image.folder') . $newFileName2));
-
-                    $product->setIllustrationImageRight($newFileName2);
-
-                    $illustrationImageRight->move(
-                        $this->getParameter('app.product.image.folder'),
-                        $newFileName2,
-                    );
-                }
-
-                if (
-                    $illustrationImageLeft != null
-                ) {
-                    /*Génération nom*/
-                    do {
-                        $newFileName3 = md5(random_bytes(100)) . '.' . $illustrationImageLeft->guessExtension();
-                    } while (file_exists($this->getParameter('app.product.image.folder') . $newFileName3));
-
-                    $product->setIllustrationImageLeft($newFileName3);
-
-                    $illustrationImageLeft->move(
-                        $this->getParameter('app.product.image.folder'),
-                        $newFileName3,
-                    );
-                }
-
-                $em = $doctrine->getManager();
-                $em->persist($product);
-                $em->flush();
-
-                $this->addFlash('success', 'Produit ajouté avec succès');
-
-                return $this->redirectToRoute('products_', [
-                    'id' => $product->getId(),
-                    'slug' => $product->getSlug(),]);
+                $coverImage->move(
+                    $this->getParameter('app.product.image.folder'),
+                    $newFileName,
+                );
             }
+
+            if (
+                $illustrationImageRight != null
+            ) {
+
+                /*Génération nom*/
+                do {
+                    $newFileName2 = md5(random_bytes(100)) . '.' . $illustrationImageRight->guessExtension();
+                } while (file_exists($this->getParameter('app.product.image.folder') . $newFileName2));
+
+                $product->setIllustrationImageRight($newFileName2);
+
+                $illustrationImageRight->move(
+                    $this->getParameter('app.product.image.folder'),
+                    $newFileName2,
+                );
+            }
+
+            if (
+                $illustrationImageLeft != null
+            ) {
+                /*Génération nom*/
+                do {
+                    $newFileName3 = md5(random_bytes(100)) . '.' . $illustrationImageLeft->guessExtension();
+                } while (file_exists($this->getParameter('app.product.image.folder') . $newFileName3));
+
+                $product->setIllustrationImageLeft($newFileName3);
+
+                $illustrationImageLeft->move(
+                    $this->getParameter('app.product.image.folder'),
+                    $newFileName3,
+                );
+            }
+
+            $em = $doctrine->getManager();
+            $em->persist($product);
+            $em->flush();
+
+            $this->addFlash('success', 'Produit ajouté avec succès');
+
+            return $this->redirectToRoute('products_', [
+                'id' => $product->getId(),
+                'slug' => $product->getSlug(),]);
+        }
 
         return $this->render('product/new_product.html.twig', [
             'form' => $form->createView(),
