@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,14 +31,7 @@ class Product
     #[ORM\Column]
     private ?bool $available = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $color = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $stone = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $type = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $price = null;
@@ -49,6 +44,23 @@ class Product
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
+
+
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'products')]
+    private Collection $categories;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Color $color = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Stone $stone = null;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
+
+
 
     public function getId(): ?int
     {
@@ -115,41 +127,6 @@ class Product
         return $this;
     }
 
-    public function getColor(): ?string
-    {
-        return $this->color;
-    }
-
-    public function setColor(?string $color): self
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    public function getStone(): ?string
-    {
-        return $this->stone;
-    }
-
-    public function setStone(?string $stone): self
-    {
-        $this->stone = $stone;
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(?string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     public function getPrice(): ?float
     {
@@ -198,4 +175,56 @@ class Product
 
         return $this;
     }
+
+
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function getColor(): ?Color
+    {
+        return $this->color;
+    }
+
+    public function setColor(?Color $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getStone(): ?Stone
+    {
+        return $this->stone;
+    }
+
+    public function setStone(?Stone $stone): self
+    {
+        $this->stone = $stone;
+
+        return $this;
+    }
+
+
 }

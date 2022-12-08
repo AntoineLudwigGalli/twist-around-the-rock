@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Product;
 use App\Form\ProductFormType;
+use App\Form\SearchFormType;
+use App\Repository\ProductRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -19,25 +22,29 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProductController extends AbstractController
 {
     #[Route('/', name: '')]
-    public function productsList(ManagerRegistry $doctrine, Request $request, PaginatorInterface $paginator): Response
+    public function productsList(ManagerRegistry $doctrine, Request $request, ProductRepository $repository): Response
     {
+        $data = new SearchData();
+        $form = $this->createForm(SearchFormType::class, $data);
+        $products = $repository->findSearch();
 
-        $requestedPage = $request->query->getInt('page', 1);
-
-        if ($requestedPage < 1) {
-            throw new NotFoundHttpException();
-        }
-
-        $em = $doctrine->getManager();
-
-        $query = $em->createQuery('SELECT p FROM App\Entity\Product p ORDER BY p.creationDate DESC');
-        $products = $paginator->paginate($query, //Requête créée juste avant
-            $requestedPage, // Page qu'on souhaite voir
-            8, // Nombre d'articles à afficher par page
-        );
+//        $requestedPage = $request->query->getInt('page', 1);
+//
+//        if ($requestedPage < 1) {
+//            throw new NotFoundHttpException();
+//        }
+//
+//        $em = $doctrine->getManager();
+//
+//        $query = $em->createQuery('SELECT p FROM App\Entity\Product p ORDER BY p.creationDate DESC');
+//        $products = $paginator->paginate($query, //Requête créée juste avant
+//            $requestedPage, // Page qu'on souhaite voir
+//            8, // Nombre d'articles à afficher par page
+//        );
         return $this->render('product/products_list.html.twig', [
             'controller_name' => 'ProductController',
-            'products' => $products
+            'products' => $products,
+            'form' => $form->createView(),
         ]);
     }
 

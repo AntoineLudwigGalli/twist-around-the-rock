@@ -9,11 +9,12 @@
     
     </div>
     <div class="row d-flex flex-column flex-md-row mb-2 text-light">
-        <p class="col-4 offset-4 text-center article-count">Nombre total de produits: {{ products.getTotalItemCount() }}</p>
-        <form class="d-flex col-10 offset-2 col-md-3 offset-md-1 justify-content-end pe-4" method="GET" action="{{ path('products_search') }}">
-            <input name="s" class="form-control me-2" type="search" placeholder="Trouvez votre bonheur" aria-label="Search">
-            <button class="btn btn-info" type="submit"><i class="fas fa-search"></i></button>
-        </form>
+{#        <p class="col-4 offset-4 text-center article-count">Nombre total de produits: {{ productsCount.getTotalItemCount() }}</p>#}
+{#        <form class="d-flex col-10 offset-2 col-md-3 offset-md-1 justify-content-end pe-4" method="GET" action="{{ path('products_search') }}">#}
+{#            <input name="s" class="form-control me-2" type="search" placeholder="Trouvez votre bonheur" aria-label="Search">#}
+{#            <button class="btn btn-info" type="submit"><i class="fas fa-search"></i></button>#}
+{#        </form>#}
+        {{ form(form) }}
     </div>
     
     
@@ -26,19 +27,19 @@
             
             
             {# Affichage du menu de navigation seulement s'il y a des produits #}
-            {% if products is not empty %}
-                <div class="row">
-                    <div class="col-12 my-3 text-center">
-                        <div class="d-inline-block">
-                            {{ knp_pagination_render(products) }}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+{#            {% if products is not empty %}#}
+{#                <div class="row">#}
+{#                    <div class="col-12 my-3 text-center">#}
+{#                        <div class="d-inline-block">#}
+{#                            {{ knp_pagination_render(products) }}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% endif %}#}
             
             {% for product in products %}
                 
-                 Un produit
+{#                 Un produit#}
                 <div class="row">
                     
                     <div class="col-12">
@@ -98,15 +99,15 @@
             
             {% endfor %}
             {# Affichage du menu de navigation seulement s'il y a des produits #}
-            {% if products is not empty %}
-                <div class="row">
-                    <div class="col-12 my-3 text-center">
-                        <div class="d-inline-block">
-                            {{ knp_pagination_render(products) }}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+{#            {% if products is not empty %}#}
+{#                <div class="row">#}
+{#                    <div class="col-12 my-3 text-center">#}
+{#                        <div class="d-inline-block">#}
+{#                            {{ knp_pagination_render(products) }}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% endif %}#}
 
 {% endblock %}
 

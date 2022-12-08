@@ -3,6 +3,8 @@ twig:
     globals:
       site_name: 'Twist Around the Rock'
 
+    form_themes: ['bootstrap_5_layout.html.twig']
+
 when@test:
     twig:
         strict_variables: true
