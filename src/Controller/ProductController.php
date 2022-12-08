@@ -213,4 +213,85 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
             ]);
     }
+
+    #[Route('/nouveau-produit/', name: 'new_product')]
+    #[isGranted('ROLE_ADMIN')]
+    public function newProduct(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response {
+        $product = new Product();
+
+        $form = $this->createForm(ProductFormType::class, $product);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $product->setSlug($slugger->slug($product->getName())->lower());
+
+            $coverImage = $form->get('coverImage')->getData();
+            $illustrationImageRight = $form->get('illustrationImageRight')->getData();
+            $illustrationImageLeft = $form->get('illustrationImageLeft')->getData();
+
+                if (
+                    $coverImage != null
+                ) {
+                    /*Génération nom*/
+                    do {
+                        $newFileName = md5(random_bytes(100)) . '.' . $coverImage->guessExtension();
+                    } while (file_exists($this->getParameter('app.product.image.folder') . $newFileName));
+
+                    $product->setCoverImage($newFileName);
+
+                    $coverImage->move(
+                        $this->getParameter('app.product.image.folder'),
+                        $newFileName,
+                    );
+                }
+
+                if (
+                    $illustrationImageRight != null
+                ) {
+
+                    /*Génération nom*/
+                    do {
+                        $newFileName2 = md5(random_bytes(100)) . '.' . $illustrationImageRight->guessExtension();
+                    } while (file_exists($this->getParameter('app.product.image.folder') . $newFileName2));
+
+                    $product->setIllustrationImageRight($newFileName2);
+
+                    $illustrationImageRight->move(
+                        $this->getParameter('app.product.image.folder'),
+                        $newFileName2,
+                    );
+                }
+
+                if (
+                    $illustrationImageLeft != null
+                ) {
+                    /*Génération nom*/
+                    do {
+                        $newFileName3 = md5(random_bytes(100)) . '.' . $illustrationImageLeft->guessExtension();
+                    } while (file_exists($this->getParameter('app.product.image.folder') . $newFileName3));
+
+                    $product->setIllustrationImageLeft($newFileName3);
+
+                    $illustrationImageLeft->move(
+                        $this->getParameter('app.product.image.folder'),
+                        $newFileName3,
+                    );
+                }
+
+                $em = $doctrine->getManager();
+                $em->persist($product);
+                $em->flush();
+
+                $this->addFlash('success', 'Produit ajouté avec succès');
+
+                return $this->redirectToRoute('products_', [
+                    'id' => $product->getId(),
+                    'slug' => $product->getSlug(),]);
+            }
+
+        return $this->render('product/new_product.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }

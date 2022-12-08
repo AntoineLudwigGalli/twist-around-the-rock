@@ -1,10 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-
-{% endblock %}
+{% block title %}Modification d'une publication{% endblock %}
 
 {% block body %}
+    
+    <h1 class="col-12 text-center my-5 text-light">Modifier le produit</h1>
+    
+    <div class="row">
+        <p class="text-center col-12 ">
+            
+            <a href="{{ path('products_view', {'id': form.vars.value.id, 'slug': form.vars.value.slug}) }}"
+                    class="text-decoration-none link-style back btn btn-danger">Revenir sur le produit</a>
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8 mx-auto text-light">
+            
+            {# Affichage du formulaire de création d'article #}
+            {{ form(form) }}
+        
+        </div>
+    </div>
 
 {% endblock %}
+
 
