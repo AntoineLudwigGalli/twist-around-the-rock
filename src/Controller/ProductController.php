@@ -8,7 +8,6 @@ use App\Form\ProductFormType;
 use App\Form\SearchFormType;
 use App\Repository\ProductRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,17 +24,29 @@ class ProductController extends AbstractController
     public function productsList(Request $request, ProductRepository $repository): Response
     {
         $data = new SearchData();
+        $data->page = $request->get('page', 1);
 
         $form = $this->createForm(SearchFormType::class, $data);
         $form->handleRequest($request);
-
         $products = $repository->findSearch($data);
 
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        return $this->render('product/products_list.html.twig', [
-            'products' => $products,
-            'form' => $form->createView(),
-        ]);
+            return $this->render('product/products_list.html.twig', [
+                'products' => $products,
+                'form' => $form->createView(),
+            ]);
+        } else {
+
+            $this->addFlash('error', 'La demande ne peut aboutir, merci de formuler une recherche cohérente.');
+
+            return $this->render('product/products_list.html.twig', [
+                'products' => $products,
+                'form' => $form->createView(),
+            ]);
+
+        }
+
     }
 
 

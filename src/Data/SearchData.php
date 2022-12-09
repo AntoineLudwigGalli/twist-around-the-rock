@@ -8,6 +8,11 @@ use App\Entity\Stone;
 
 class SearchData
 {
+    /**
+     * @var int
+     */
+    public int $page = 1;
+
 
     public $q = ' ';
 

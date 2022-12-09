@@ -73,12 +73,6 @@ class SearchFormType extends AbstractType
                 'required' => false,
             ])
 
-            ->add('save', SubmitType::class, [
-                'label' => 'Filtrer',
-                'attr' => [
-                    'class' => 'btn btn-primary w-100 mt-3',
-                ]
-            ])
         ;
     }
 

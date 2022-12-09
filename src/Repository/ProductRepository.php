@@ -6,6 +6,7 @@ use App\Data\SearchData;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -17,9 +18,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+
+    private PaginatorInterface $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Product::class);
+        $this->paginator = $paginator;
     }
 
     public function save(Product $entity, bool $flush = false): void
@@ -42,9 +47,10 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * Retourne les produits filtrés ou recherchés
-     * @return Product[]
+     * @param SearchData $search
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
-    public function findSearch(SearchData $search) :array
+    public function findSearch(SearchData $search) : \Knp\Component\Pager\Pagination\PaginationInterface
     {
         $query = $this
             ->createQueryBuilder('p')
@@ -97,7 +103,11 @@ class ProductRepository extends ServiceEntityRepository
                 ->andWhere('s.id IN (:stones)')
                 ->setParameter('stones', $search->stones);
         }
-
-        return $query->getQuery()->getResult();
+        $query =  $query->getQuery();
+        return $this->paginator->paginate(
+            $query,
+            $search->page,
+            3
+        );
     }
 }

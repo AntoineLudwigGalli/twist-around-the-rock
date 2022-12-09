@@ -3,10 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\Entity\Comment;
 use App\Form\ArticleFormType;
-use App\Form\CommentFormType;
-use App\Form\NewArticleFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
