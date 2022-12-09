@@ -6,8 +6,8 @@
     
     <div class="row publication_list_title">
         <h1 class="col-12 text-center my-5 text-light">Liste des produits</h1>
-    
     </div>
+    <div>{{ knp_pagination_sortable(products, 'Prix', 'p.price') }}</div>
     <div class="row d-flex flex-column flex-md-row mb-2 text-light">
         {{ form_start(form) }}
 
@@ -15,6 +15,7 @@
         
         {{ form_end(form) }}
     </div>
+    <div id="price-slider" data-min="{{ min }}" data-max="{{ max }}"></div>
     
     
     <div class="row">
@@ -94,15 +95,17 @@
             
             {% endfor %}
             {# Affichage du menu de navigation seulement s'il y a des produits #}
-{#            {% if products is not empty %}#}
-{#                <div class="row">#}
-{#                    <div class="col-12 my-3 text-center">#}
-{#                        <div class="d-inline-block">#}
-{#                            {{ knp_pagination_render(products) }}#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            {% endif %}#}
+            {% if products is not empty %}
+                <div class="row">
+                    <div class="col-12 my-3 text-center">
+                        <div class="d-inline-block">
+                            {{ knp_pagination_render(products) }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}
 

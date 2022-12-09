@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Data\SearchData;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -52,6 +53,31 @@ class ProductRepository extends ServiceEntityRepository
      */
     public function findSearch(SearchData $search) : \Knp\Component\Pager\Pagination\PaginationInterface
     {
+
+        $query =  $this->getSearchQuery($search)->getQuery();
+        return $this->paginator->paginate(
+            $query,
+            $search->page,
+            3
+        );
+    }
+
+    /**
+     * Récupère min et max correspondant à une recherche
+     * @param SearchData $search
+     * @return int[]
+     */
+    public function findMinMax(SearchData $search) :array
+    {
+        $results = $this->getSearchQuery($search, true)
+            ->select('MIN(p.price) as min', 'MAX(p.price) as max')
+            ->getQuery()
+            ->getScalarResult();
+        return [(int)$results[0]['min'], (int)$results[0]['max']];
+    }
+
+    private function getSearchQuery(SearchData $search, $ignorePrice = false) : QueryBuilder
+    {
         $query = $this
             ->createQueryBuilder('p')
 
@@ -63,13 +89,13 @@ class ProductRepository extends ServiceEntityRepository
                 ->setParameter('q', "%{$search->q}%");
         }
 
-        if (!empty($search->min)) {
+        if (!empty($search->min) && !$ignorePrice) {
             $query = $query
                 ->andWhere('p.price >= :min')
                 ->setParameter('min', $search->min);
         }
 
-        if (!empty($search->max)) {
+        if (!empty($search->max) && !$ignorePrice) {
             $query = $query
                 ->andWhere('p.price <= :max')
                 ->setParameter('max', $search->max);
@@ -103,11 +129,7 @@ class ProductRepository extends ServiceEntityRepository
                 ->andWhere('s.id IN (:stones)')
                 ->setParameter('stones', $search->stones);
         }
-        $query =  $query->getQuery();
-        return $this->paginator->paginate(
-            $query,
-            $search->page,
-            3
-        );
+
+        return $query;
     }
 }

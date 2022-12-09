@@ -28,26 +28,31 @@ class ProductController extends AbstractController
 
         $form = $this->createForm(SearchFormType::class, $data);
         $form->handleRequest($request);
+        [$min, $max] = $repository->findMinMax($data);
+
         $products = $repository->findSearch($data);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && !$form->isValid()) {
 
+                $this->addFlash('error', 'La demande ne peut aboutir, merci de formuler une recherche cohérente.');
             return $this->render('product/products_list.html.twig', [
                 'products' => $products,
                 'form' => $form->createView(),
+                'min' => $min,
+                'max' => $max,
             ]);
-        } else {
+        }
 
-            $this->addFlash('error', 'La demande ne peut aboutir, merci de formuler une recherche cohérente.');
 
             return $this->render('product/products_list.html.twig', [
                 'products' => $products,
                 'form' => $form->createView(),
+                'min' => $min,
+                'max' => $max,
             ]);
 
         }
 
-    }
 
 
     /**
