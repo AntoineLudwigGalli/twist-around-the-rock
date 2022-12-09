@@ -1,0 +1,10 @@
+{# Affichage du menu de navigation seulement s'il y a des produits #}
+                {% if products is not empty %}
+                    <div class="row js-filter-pagination">
+                        <div class="col-12 my-3 text-center">
+                            <div class="d-inline-block">
+                                {{ knp_pagination_render(products) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}

@@ -1,0 +1,53 @@
+
+{% for product in products %}
+    
+    {#                 Un produit #}
+    <div class="row js-filter-content" id="product-{{ product.id }}">
+        
+        <div class="col-12">
+            
+            <div class="card my-3">
+                
+                <div class="card-header">
+                    <a href="{{ path('products_view', {'id': product.id, 'slug': product.slug
+                    }) }}" class="link-style">{{ product.name }}
+                    </a>
+                </div>
+                
+                <div class="card-body">
+                    {% if product.coverImage != null %}
+                        <a href="{{ path('products_view', {'id': product.id, 'slug': product.slug
+                        }) }}" class="link-style"> <img src="{{ asset('images/product_images/' ~ product.coverImage) }}" alt="Image de couverture du produit {{ product.name }}" class="article-image-thumbnail col-10 offset-1 img-fluid img-thumbnail"> </a>
+                    {% endif %}
+                    
+                    <footer class="blockquote-footer my-2">Créé le <span class="quote-text">{{ product.creationDate|date('d/m/Y') }}</span>.
+                    </footer>
+                    
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="mt-3">
+                            <a onclick="return confirm('Êtes-vous sur de vouloir modifier ce produit ?')" href="{{ path('products_edit', {'id': product.id}) }}" class="text-decoration-none text-warning me-3"> <i class="fa-solid  fa-pen-to-square me-2"></i> Modifier </a>
+                            
+                            <a onclick="return confirm('Êtes-vous sur de vouloir supprimer ce produit ?')" href="{{ path('products_delete', {'id': product.id, 'csrf_token' : csrf_token('product_delete_' ~ product.id) }) }}" class="text-decoration-none text-danger"> <i
+                                        class="fa-solid fa-trash-can me-2"></i> Supprimer </a>
+                        </div>
+                    
+                    {% endif %}
+                
+                </div>
+            
+            </div>
+        
+        </div>
+    
+    </div>
+
+{% else %}
+    
+    <div class="row">
+        <p class="col-12 text-center alert alert-warning">Aucun produit à afficher</p>
+    </div>
+
+{% endfor %}
+
+
+

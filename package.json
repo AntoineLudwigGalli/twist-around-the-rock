@@ -2,6 +2,7 @@
     "devDependencies": {
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
+        "@fortawesome/fontawesome-free": "^6.2.1",
         "@hotwired/stimulus": "^3.0.0",
         "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/webpack-encore": "^4.0.0",
@@ -20,6 +21,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "nouislider": "^15.6.1"
+        "jquery": "^3.6.1",
+        "nouislider": "^15.6.1",
+        "react-flip-toolkit": "^7.0.17"
     }
 }

@@ -3,8 +3,16 @@
 {% block title %}Nouveau produit{% endblock %}
 
 {% block body %}
+  
     <div class="row">
         <h1 class="col-12 text-center my-5 text-light">Nouveau produit</h1>
+    </div>
+    <div class="row">
+        <p class="text-center col-12 ">
+            
+            <a href="{{ path('admin_products_list', {'id': form.vars.value.id, 'slug': form.vars.value.slug}) }}"
+                    class="text-decoration-none link-style back btn btn-danger">Revenir à la liste</a>
+        </p>
     </div>
     <div class="row">
         <div class="col-12 col-md-8 mx-auto text-light ">

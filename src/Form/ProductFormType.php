@@ -2,8 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
+use App\Entity\Color;
 use App\Entity\Product;
+use App\Entity\Stone;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -125,43 +129,27 @@ class ProductFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('color', TextType::class, [
+            ->add('color', EntityType::class, [
                 'label' => 'Couleur du produit',
-                'constraints' => [
-                    new Length([
-                        'min' => 2,
-                        'max' => 255,
-                        'minMessage' => "Le nom doit contenir au minimum {{ limit }} caractères.",
-                        'maxMessage' => "Le nom doit contenir au maximum {{ limit }} caractères.",
-                    ])
-                ],
+                'class' => Color::class,
+                'placeholder' => 'Choisissez la couleur du bijou'
             ])
-            ->add('stone' , TextType::class, [
+
+            ->add('stone' , EntityType::class, [
                 'label' => 'Pierre utilisée',
-                'constraints' => [
-                    new Length([
-                        'min' => 2,
-                        'max' => 255,
-                        'minMessage' => "Le nom de la pierre doit contenir au minimum {{ limit }} caractères.",
-                        'maxMessage' => "Le nom de la pierre doit contenir au maximum {{ limit }} caractères.",
-                    ])
-                ],
+                'class' => Stone::class,
+                'placeholder' => 'Choisissez la pierre du bijou'
             ])
-            ->add('type' , TextType::class, [
+            ->add('category' , EntityType::class, [
                 'label' => 'Type de bijou',
-                'constraints' => [
-                    new Length([
-                        'min' => 2,
-                        'max' => 255,
-                        'minMessage' => "Le type de bijou doit contenir au minimum {{ limit }} caractères.",
-                        'maxMessage' => "Le type de bijou doit contenir au maximum {{ limit }} caractères.",
-                    ])
-                ],
+                'class' => Category::class,
+                'placeholder' => 'Choisissez le type de bijou'
             ])
+
             ->add('price', NumberType::class, [
                 'label' => 'Prix indicatif en euros'
-
             ])
+
             ->add('creationDate', DateType::class, [
                 'label' => 'Sélectionnez la date de création du produit',
                 'model_timezone' => 'Europe/Paris', //Date au format FR

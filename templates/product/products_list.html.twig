@@ -7,106 +7,64 @@
     <div class="row publication_list_title">
         <h1 class="col-12 text-center my-5 text-light">Liste des produits</h1>
     </div>
-    <div>{{ knp_pagination_sortable(products, 'Prix', 'p.price') }}</div>
-    <div class="row d-flex flex-column flex-md-row mb-2 text-light">
-        {{ form_start(form) }}
-
-        <button class="btn btn-primary" type="submit">Filtrer</button>
+    <div class="js-filter">
         
-        {{ form_end(form) }}
-    </div>
-    <div id="price-slider" data-min="{{ min }}" data-max="{{ max }}"></div>
-    
-    
-    <div class="row">
+       
         
-        <div class="col-12 col-md-8 mx-auto">
-            
-{#             Affichage du menu de navigation seulement s'il y a des produits #}
-            {% if products is not empty %}
-                <div class="row">
-                    <div class="col-12 my-3 text-center">
-                        <div class="d-inline-block">
-                            {{ knp_pagination_render(products) }}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-            
-            {% for product in products %}
+        <div class="row d-flex flex-column flex-md-row mb-2 text-light">
+            {{ form_start(form, { attr: {class: 'js-filter-form'}}) }}
+            {{ form_row(form.q) }}
+            <button class="btn btn-primary col-12 mb-2" type="submit">Filtrer</button>
+            <div class="row mx-1">
+               
+                    <div class="btn btn-light filter-button col-6">Filtrer les produits</div>
+                    {{ include('product/product_sorting.html.twig') }}
                 
-{#                 Un produit#}
-                <div class="row">
+                <div class="filter-form d-none">
+                    <div class="col-6 d-flex flex-row  align-items-center category-dropdown">
+                        {{ form_label(form.categories) }}
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                        {{ form_widget(form.categories) }}
                     
-                    <div class="col-12">
-                        
-                        <div class="card my-3">
-                            
-                            <div class="card-header">
-                                <a href="{{ path('products_view', {'id': product.id, 'slug': product.slug
-                                }) }}" class="link-style">{{ product.name }}
-                                </a>
-                            </div>
-                            
-                            <div class="card-body">
-                                {% if product.coverImage != null %}
-                                    <a href="{{ path('products_view', {'id': product.id, 'slug': product.slug
-                                    }) }}" class="link-style">
-                                        <img src="{{ asset('images/product_images/' ~ product.coverImage) }}" alt="Image de couverture du produit {{ product.name }}" class="article-image-thumbnail col-10 offset-1 img-fluid img-thumbnail">
-                                    </a>
-                                {% endif %}
-                                
-                                <footer class="blockquote-footer my-2">Créé le
-                                    <span class="quote-text">{{ product.creationDate|date('d/m/Y') }}</span>.
-                                </footer>
-                                
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <div class="mt-3">
-                                        <a onclick="return confirm('Êtes-vous sur de vouloir modifier ce produit ?')"
-                                                href="{{ path('products_edit', {'id': product.id}) }}"
-                                                class="text-decoration-none text-warning me-3">
-                                            <i class="fa-solid  fa-pen-to-square me-2"></i>
-                                            Modifier
-                                        </a>
-                                        
-                                        <a onclick="return confirm('Êtes-vous sur de vouloir supprimer ce produit ?')"
-                                                href="{{ path('products_delete', {'id': product.id, 'csrf_token' : csrf_token('product_delete_' ~ product.id) }) }}"
-                                                class="text-decoration-none text-danger">
-                                            <i class="fa-solid fa-trash-can me-2"></i>
-                                            Supprimer
-                                        </a>
-                                    </div>
-                                
-                                {% endif %}
-                            
-                            </div>
-                        
-                        </div>
+    
+                    <div class="col-6 d-flex flex-row align-items-center color-dropdown">
+                        {{ form_label(form.colors) }}
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    {{ form_widget(form.colors) }}
+    
+                    <div class="col-6 d-flex flex-row align-items-center stone-dropdown">
+                        {{ form_label(form.stones) }}
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    {{ form_widget(form.stones) }}
                     
-                    </div>
-                
+                    <div class="mt-3">{{ form_row(form.available) }}</div>
+                    
+                    {{ form_row(form.min) }}
+                    {{ form_row(form.max) }}
+                    <div id="price-slider" data-min="{{ min }}" data-max="{{ max }}"></div>
                 </div>
+            </div>
             
-            {% else %}
-                
-                <div class="row">
-                    <p class="col-12 text-center alert alert-warning">Aucun produit à afficher</p>
-                </div>
+            {{ form_end(form) }}
+        </div>
+        
+        
+        
+        
+        <div class="row">
             
-            {% endfor %}
-            {# Affichage du menu de navigation seulement s'il y a des produits #}
-            {% if products is not empty %}
-                <div class="row">
-                    <div class="col-12 my-3 text-center">
-                        <div class="d-inline-block">
-                            {{ knp_pagination_render(products) }}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+            <div class="col-12 col-md-8 mx-auto">
+    
+                
+                {{ include('product/product_card.html.twig') }}
+                
+                {{ include('product/product_pagination.html.twig') }}
+            </div>
         </div>
     </div>
-
 {% endblock %}
 
 

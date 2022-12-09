@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\CarrouselImages;
 use App\Form\CarrouselImagesFormType;
+use App\Form\ProductFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -232,4 +233,34 @@ class AdminPanelController extends AbstractController
         ]);
     }
 
+
+//    Produits
+
+    #[Route('/admin/produits/liste', name: 'admin_products_list')]
+    public function admin_products_list(ManagerRegistry $doctrine, Request $request, PaginatorInterface $paginator): Response
+    {
+        // On récupère dans l'URL la donnée GET page (si elle n'existe pas, la valeur retournée par défaut sera la page 1)
+        $requestedPage = $request->query->getInt('page', 1);
+
+        // Si le numéro de page demandé dans l'URL est inférieur à 1, erreur 404
+        if ($requestedPage < 1) {
+            throw new NotFoundHttpException();
+        }
+        // Récupération du manager des entités
+        $em = $doctrine->getManager();
+
+        // Création d'une requête qui servira au paginator pour récupérer les produits de la page courante
+        $query = $em->createQuery('SELECT p FROM App\Entity\Product p  ORDER BY p.creationDate ASC');
+
+        //On stocke dans $products les 10 images de la page demandée dans l'URL
+        $products = $paginator->paginate(
+            $query, // Requête de selection des produits en BDD
+            $requestedPage, // Numéro de la page dont on veut les produits
+            10); // Nombre de produits par page
+
+        return $this->render('admin_panel/products-list.html.twig', [
+            'controller_name' => 'AdminPanelController',
+            'products' => $products,
+        ]);
+    }
 }

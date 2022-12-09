@@ -10,9 +10,9 @@ use App\Repository\ProductRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -32,26 +32,31 @@ class ProductController extends AbstractController
 
         $products = $repository->findSearch($data);
 
-        if ($form->isSubmitted() && !$form->isValid()) {
-
-                $this->addFlash('error', 'La demande ne peut aboutir, merci de formuler une recherche cohérente.');
-            return $this->render('product/products_list.html.twig', [
-                'products' => $products,
-                'form' => $form->createView(),
+        if($request->get('ajax')){
+            return new JsonResponse([
+                'content' => $this->renderView('product/product_card.html.twig', [
+                    'products' => $products,
+                ]),
+                'sorting' => $this->renderView('product/product_sorting.html.twig', [
+                    'products' => $products,
+                ]),
+                'pagination' => $this->renderView('product/product_pagination.html.twig', [
+                    'products' => $products
+                ]),
+                'pages' => ceil($products->getTotalItemCount() / $products->getItemNumberPerPage()),
                 'min' => $min,
                 'max' => $max,
             ]);
         }
 
+        return $this->render('product/products_list.html.twig', [
+            'products' => $products,
+            'form' => $form->createView(),
+            'min' => $min,
+            'max' => $max,
+        ]);
+    }
 
-            return $this->render('product/products_list.html.twig', [
-                'products' => $products,
-                'form' => $form->createView(),
-                'min' => $min,
-                'max' => $max,
-            ]);
-
-        }
 
 
 
@@ -65,7 +70,7 @@ class ProductController extends AbstractController
     {
 
         return $this->render('product/product_view.html.twig', [
-            'article' => $product,
+            'product' => $product,
         ]);
     }
 
@@ -92,7 +97,7 @@ class ProductController extends AbstractController
             $this->addFlash('success', 'Produit supprimé avec succès');
         }
 
-        return $this->redirectToRoute('products_');
+        return $this->redirectToRoute('admin_products_list');
     }
 
     /**

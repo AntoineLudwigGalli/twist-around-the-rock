@@ -11,11 +11,21 @@ import './styles/app.css';
 // start the Stimulus application
 import './bootstrap';
 
-// NoUiSlider pour le slider des prix
+// import jQuery
+import 'jquery/dist/jquery.min';
 
+//import FontAwesome
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/js/all.min';
+
+// Import NoUislider
 import noUiSlider from 'nouislider';
-import 'nouislider/dist/nouislider.min.css'
+import 'nouislider/dist/nouislider.min.css';
+//Import Filter
+import Filter from './modules/Filter';
+import * as events from "events";
 
+// NoUiSlider pour le slider des prix
 const slider = document.getElementById('price-slider');
 
 if (slider) {
@@ -42,18 +52,39 @@ if (slider) {
             max.value = Math.round(values[1])
         }
     })
+    range.on('end', function (values, handle){
+        min.dispatchEvent(new Event('change'));
+    })
 }
 
-// Owl Carrousel settings
-$(document).ready(function(){
-    $('.owl-carousel').owlCarousel({
-        items: 1,
-        loop: true,
-        center: true,
-        nav: true,
-        autoplay: true,
-        lazyLoad: true,
-        autoplayHoverPause: true,
-        autoplayTimeout: 3000,
-    });
+
+
+// Filter settings
+new Filter(document.querySelector('.js-filter'));
+
+// Dropdown filter button
+const filterButton = document.querySelector('.filter-button');
+const filterForm = document.querySelector('.filter-form');
+const categories = document.getElementById('categories')
+const colors = document.getElementById('colors')
+const stones = document.getElementById('stones')
+const categoryDropdown = document.querySelector('.category-dropdown');
+const colorDropdown = document.querySelector('.color-dropdown');
+const stoneDropdown = document.querySelector('.stone-dropdown');
+
+categories.classList.add('d-none');
+colors.classList.add('d-none');
+stones.classList.add('d-none');
+
+filterButton.addEventListener('click', function (){
+    filterForm.classList.toggle('d-none');
+});
+categoryDropdown.addEventListener('click', function (){
+   categories.classList.toggle('d-none');
+});
+colorDropdown.addEventListener('click', function (){
+    colors.classList.toggle('d-none');
+});
+stoneDropdown.addEventListener('click', function (){
+    stones.classList.toggle('d-none');
 });

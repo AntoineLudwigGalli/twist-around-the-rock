@@ -8,10 +8,18 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/owl-carrousel-custom-settings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdminPanelController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminPanelController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ProductFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ProductFormType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/SearchFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SearchFormType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_panel/home.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_panel/home.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/blog/product_view.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/product/new_product.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/new_product.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/product/product_edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/product_edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/product/product_view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/product_view.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/product/products_list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/products_list.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,13 +171,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/antoine/Bureau/Dev/twist-around-the-rock/config/packages",
+    "last_opened_file_path": "/home/antoine/Bureau/Dev/Projets terminés livrés/Action-Culottee",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/snap/phpstorm/307/plugins/javascript-impl/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -193,7 +202,8 @@
       <workItem from="1670325376885" duration="14325000" />
       <workItem from="1670404184913" duration="14874000" />
       <workItem from="1670489927050" duration="17676000" />
-      <workItem from="1670574668117" duration="7479000" />
+      <workItem from="1670574668117" duration="21086000" />
+      <workItem from="1670615339694" duration="12069000" />
     </task>
     <servers />
   </component>

@@ -127,6 +127,32 @@ footer li a{
     font-style: italic;
 }
 
+/*Liste des produits*/
+
+.js-filter-sorting a{
+    color: black;
+    text-decoration: none;
+}
+.js-filter-sorting{
+    border: #f0f0f0 solid 1px;
+    border-radius: 5px;
+}
+
+#categories, #colors, #stones{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.form-check{
+    width: 50%;
+}
+
+
+
+
 
 @media screen and (min-width: 768px){
     .owl-nav{
