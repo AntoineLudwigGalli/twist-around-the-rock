@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %}Modifier une photo du carrousel d'images{% endblock %}
+
+{% block body %}
+    
+    <div class="row">
+        <h1 class="col-12 text-center my-5 text-light">Modifier une photo du carrousel d'images</h1>
+    </div>
+    <div class="row">
+        <img src="{{ asset('images/product_carrousel_images/' ~ product_carousel_image.image) }}" alt="Image du carrousel en cours de modification" class="col-12 my-3">
+    </div>
+    
+    <div class="row ">
+        <div class="col-12 col-md-8 offset-md-3 text-light">
+            {{ form(form) }}
+        
+        </div>
+    </div>
+    <div class="row d-flex flex-row">
+        <div class="col-md-8 offset-md-3 d-flex flex-row justify-content-between">
+            <a href="{{ path('products_delete_carousel_image', {'id': product_carousel_image.id, 'csrf_token' : csrf_token('delete_product_carousel_image' ~ product_carousel_image.id)}) }}" onclick="return confirm( 'Confirmez-vous la suppression de cette image du carousel ?')" class="col-5 btn
+            btn-warning">Supprimer</a>
+            <a href="{{ path('products_view', {'id': product_carousel_image.product.id, 'slug': product_carousel_image.product.slug}) }}" class="col-5 offset-2 btn btn-danger">Annuler</a>
+        </div>
+    </div>
+
+{% endblock %}

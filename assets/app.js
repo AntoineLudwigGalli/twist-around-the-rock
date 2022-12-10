@@ -104,6 +104,7 @@ const stoneButton = document.querySelector('.filter-data.stone');
 const categoryForm = document.querySelector(".filter-form-options.category");
 const colorForm = document.querySelector(".filter-form-options.color");
 const stoneForm = document.querySelector(".filter-form-options.stone");
+
 if (filterFormOptions){
     filterFormOptions.forEach(formOption =>
         formOption.classList.add('d-none')
@@ -146,8 +147,6 @@ if (filterFormOptions){
         colorForm.classList.add('d-none');
         stoneForm.classList.toggle('d-none');
     });
-
-
 }
 
 

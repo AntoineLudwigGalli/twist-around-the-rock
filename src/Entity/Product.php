@@ -55,9 +55,13 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Category $category = null;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductCarrouselImage::class, orphanRemoval: true)]
+    private Collection $productCarrouselImages;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->productCarrouselImages = new ArrayCollection();
     }
 
 
@@ -212,6 +216,36 @@ class Product
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductCarrouselImage>
+     */
+    public function getProductCarrouselImages(): Collection
+    {
+        return $this->productCarrouselImages;
+    }
+
+    public function addProductCarrouselImage(ProductCarrouselImage $productCarrouselImage): self
+    {
+        if (!$this->productCarrouselImages->contains($productCarrouselImage)) {
+            $this->productCarrouselImages->add($productCarrouselImage);
+            $productCarrouselImage->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductCarrouselImage(ProductCarrouselImage $productCarrouselImage): self
+    {
+        if ($this->productCarrouselImages->removeElement($productCarrouselImage)) {
+            // set the owning side to null (unless already changed)
+            if ($productCarrouselImage->getProduct() === $this) {
+                $productCarrouselImage->setProduct(null);
+            }
+        }
 
         return $this;
     }

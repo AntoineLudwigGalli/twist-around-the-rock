@@ -8,6 +8,9 @@ parameters:
   app.carrousel.image.folder: '%kernel.project_dir%/public/images/carrousel_images/'
   app.article.image.folder: '%kernel.project_dir%/public/images/article_images/'
   app.product.image.folder: '%kernel.project_dir%/public/images/product_images/'
+  app.about.image.folder: '%kernel.project_dir%/public/images/about_images/'
+  app.about.carrousel.image.folder: '%kernel.project_dir%/public/images/about_carrousel_images/'
+  app.product.carrousel.image.folder: '%kernel.project_dir%/public/images/product_carrousel_images/'
 
 services:
     # default configuration for services in *this* file

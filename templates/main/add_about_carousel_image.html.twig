@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une photo dans le carrousel d'images{% endblock %}
+
+{% block body %}
+    
+    <div class="row">
+        <h1 class="col-12 text-center my-5 text-light">Ajouter une photo dans le carrousel d'images</h1>
+    </div>
+    
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-3 text-light">
+            {{ form(form) }}
+        </div>
+    </div>
+    
+{% endblock %}

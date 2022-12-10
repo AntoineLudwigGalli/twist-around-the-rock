@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Data\SearchData;
 use App\Entity\Product;
+use App\Entity\ProductCarrouselImage;
+use App\Form\ProductCarrouselImageFormType;
 use App\Form\ProductFormType;
 use App\Form\SearchFormType;
 use App\Repository\ProductRepository;
@@ -57,9 +59,6 @@ class ProductController extends AbstractController
         ]);
     }
 
-
-
-
     /**
      * Contrôleur de la page permettant de voir un produit en détail (via ID et slug dans l'URL)
      */
@@ -69,8 +68,12 @@ class ProductController extends AbstractController
     public function publicationView(Product $product, Request $request, ManagerRegistry $doctrine): Response
     {
 
+        $productCarrouselImagesRepo = $doctrine->getRepository(ProductCarrouselImage::class);
+        $productCarrouselImages = $productCarrouselImagesRepo->findBy(['product' => $product->getId()]);
+
         return $this->render('product/product_view.html.twig', [
             'product' => $product,
+            'productCarrouselImages' => $productCarrouselImages
         ]);
     }
 
@@ -286,6 +289,138 @@ class ProductController extends AbstractController
 
         return $this->render('product/new_product.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('{id}/ajouter-photo-carrousel', name: 'add_carousel_image', requirements: ["id" => "\d+"] )]
+    #[isGranted('ROLE_ADMIN')]
+    public function addProductCarouselImage(Request $request, ManagerRegistry $doctrine, Product $product): \Symfony\Component\HttpFoundation\Response
+    {
+        $productCarouselImage = new ProductCarrouselImage();
+        $form=$this->createForm(ProductCarrouselImageFormType::class);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $productCarouselImage->setName($form->get('name')->getData());
+            $productCarouselImage->setProduct($product);
+            $image = $form->get('image')->getData();
+
+            if(
+                $productCarouselImage->getImage() != null &&
+                file_exists($this->getParameter('app.product.carrousel.image.folder') . $productCarouselImage->getImage() )
+            ){
+                unlink($this->getParameter('app.product.carrousel.image.folder') . $productCarouselImage->getImage() );
+            }
+
+
+            /*Génération nom*/
+            do{
+                $newFileName = md5( random_bytes(100) ) . '.' . $image->guessExtension();
+            } while (file_exists($this->getParameter('app.product.carrousel.image.folder') .$newFileName));
+
+            $productCarouselImage->setImage($newFileName);
+
+            $em = $doctrine->getManager();
+            $em->persist($productCarouselImage);
+            $em->flush();
+
+            $image -> move(
+                $this->getParameter('app.product.carrousel.image.folder'),
+                $newFileName,
+            );
+
+            $this->addFlash('success', 'Photo du carrousel ajoutée avec succès');
+
+            return $this->redirectToRoute('products_view', [
+                'id' => $product->getId(),
+                'slug' => $product->getSlug(),
+            ]);
+        }
+
+        return $this->render('product/add_product_carousel_image.html.twig', [
+            'form' => $form->createView(),
+            'id' => $product->getId()
+        ]);
+    }
+
+    #[Route('{productId}/editer-photo-carrousel/{id}', name: 'edit_carousel_image')]
+    #[isGranted('ROLE_ADMIN')]
+    public function editProductCarouselPicture(Request $request, ManagerRegistry $doctrine, ProductCarrouselImage $productCarrouselImage): \Symfony\Component\HttpFoundation\Response
+    {
+
+        $form = $this->createForm(ProductCarrouselImageFormType::class);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('image')->getData();
+
+            if (
+                $productCarrouselImage->getImage() != null &&
+                file_exists($this->getParameter('app.product.carrousel.image.folder') . $productCarrouselImage->getImage())
+            ) {
+                unlink($this->getParameter('app.product.carrousel.image.folder') . $productCarrouselImage->getImage());
+            }
+
+
+            /*Génération nom*/
+            do {
+                $newFileName = md5(random_bytes(100)) . '.' . $image->guessExtension();
+            } while (file_exists($this->getParameter('app.product.carrousel.image.folder') . $newFileName));
+
+            $productCarrouselImage->setImage($newFileName);
+
+            $em = $doctrine->getManager();
+            $em->flush();
+
+            $image->move(
+                $this->getParameter('app.product.carrousel.image.folder'),
+                $newFileName,
+            );
+
+            $this->addFlash('success', 'Photo du carrousel modifiée avec succès');
+
+            return $this->redirectToRoute('products_view', [
+                'id' => $productCarrouselImage->getProduct()->getId(),
+                'slug' => $productCarrouselImage->getProduct()->getSlug(),
+            ]);
+        }
+
+        return $this->render('product/edit_product_carrousel_image.html.twig', [
+            'form' => $form->createView(),
+            'product_carousel_image' => $productCarrouselImage,
+            'productId' => $productCarrouselImage->getProduct(),
+        ]);
+    }
+
+    #[Route('/supprimer-photo-carrousel/{id}', name: 'delete_carousel_image', priority: 10)]
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteProductCarouselPicture(ProductCarrouselImage $productCarrouselImage, Request $request, ManagerRegistry $doctrine): \Symfony\Component\HttpFoundation\RedirectResponse
+    {
+//        Token CSRF
+        $csrfToken = $request->query->get('csrf_token', '');
+
+        if (!$this->isCsrfTokenValid('delete_product_carousel_image' . $productCarrouselImage->getId(), $csrfToken)) {
+
+            $this->addFlash('error','Token de sécurité invalide, veuillez ré-essayer.');
+        }
+        else {
+            unlink($this->getParameter('app.product.carrousel.image.folder') . $productCarrouselImage->getImage());
+
+            // Suppression de l'image en BDD
+            $em = $doctrine->getManager();
+            $em->remove($productCarrouselImage);
+            $em->flush();
+
+            // Message flash de succès
+            $this->addFlash('success', "La photo a été supprimée avec succès !");
+        }
+        // Redirection vers la page qui liste les events
+        return $this->redirectToRoute('products_view', [
+            'product_carrousel_image' => $productCarrouselImage,
+            'id' => $productCarrouselImage->getProduct()->getId(),
+            'slug' => $productCarrouselImage->getProduct()->getSlug(),
         ]);
     }
 }

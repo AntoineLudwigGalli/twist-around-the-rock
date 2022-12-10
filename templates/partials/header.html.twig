@@ -15,26 +15,26 @@
                 </li>
                 <div class="separation-line col-8 offset-2"></div>
                 <li class="nav-item mx-auto">
-                    <a class="nav-link active" aria-current="page" href="{{ path('main_home') }}">
-                        <img src="{{ asset('images/nav-button-home.png') }}" alt="Bouton de navigation vers l'accueil">
+                    <a class="nav-link active" aria-current="page" href="{{ path('products_') }}">
+                        <img src="{{ asset('images/nav-button-real.png') }}" alt="Bouton de navigation vers les produits">
+                    </a>
+                </li>
+                <div class="separation-line col-8 offset-2"></div>
+                <li class="nav-item mx-auto">
+                    <a class="nav-link active" aria-current="page" href="{{ path('main_about') }}">
+                        <img src="{{ asset('images/nav-button-twist.png') }}" alt="Bouton de navigation vers la présentation de l'artiste et de son atelier">
+                    </a>
+                </li>
+                <div class="separation-line col-8 offset-2"></div>
+                <li class="nav-item mx-auto">
+                    <a class="nav-link active" aria-current="page" href="{{ path('blog_publication_list') }}">
+                        <img src="{{ asset('images/nav-button-blog.png') }}" alt="Bouton de navigation vers le blog et les nouveauts">
                     </a>
                 </li>
                 <div class="separation-line col-8 offset-2"></div>
                 <li class="nav-item mx-auto">
                     <a class="nav-link active" aria-current="page" href="{{ path('main_home') }}">
-                        <img src="{{ asset('images/nav-button-home.png') }}" alt="Bouton de navigation vers l'accueil">
-                    </a>
-                </li>
-                <div class="separation-line col-8 offset-2"></div>
-                <li class="nav-item mx-auto">
-                    <a class="nav-link active" aria-current="page" href="{{ path('main_home') }}">
-                        <img src="{{ asset('images/nav-button-home.png') }}" alt="Bouton de navigation vers l'accueil">
-                    </a>
-                </li>
-                <div class="separation-line col-8 offset-2"></div>
-                <li class="nav-item mx-auto">
-                    <a class="nav-link active" aria-current="page" href="{{ path('main_home') }}">
-                        <img src="{{ asset('images/nav-button-home.png') }}" alt="Bouton de navigation vers l'accueil">
+                        <img src="{{ asset('images/nav-button-contact.png') }}" alt="Bouton de navigation vers les contacts">
                     </a>
                 </li>
                 {% if app.user and app.user.roles[0] == "ROLE_ADMIN" %}

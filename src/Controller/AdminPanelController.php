@@ -32,11 +32,13 @@ class AdminPanelController extends AbstractController
         $query = $em->createQuery('SELECT a FROM App\Entity\Article a');
         $articles = $paginator->paginate($query, 55);
 
-        return $this->render('admin_panel/home.html.twig', [
-            'controller_name' => 'AdminPanelController',
-            'carrouselImages' => $carrouselImages,
-            'articles' => $articles
+        $query = $em->createQuery('SELECT p FROM App\Entity\Product p');
+        $products = $paginator->paginate($query, 55);
 
+        return $this->render('admin_panel/home.html.twig', [
+            'carrouselImages' => $carrouselImages,
+            'articles' => $articles,
+            'products' => $products,
         ]);
     }
 

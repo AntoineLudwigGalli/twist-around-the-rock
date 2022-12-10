@@ -18,17 +18,23 @@ nav{
 
 .navbar-nav{
     position: absolute;
-    background: rgba(240, 240, 240, 0.95);
+    background: rgba(0, 0, 0);
+    border: solid 1px #f0f0f0;
     border-radius: 10px;
     padding-bottom: 1rem;
     padding-top: 1rem;
 }
 
 .separation-line{
-    border: rgba(0, 0, 0, 0.5) 1px solid;
+    border: rgba(240, 240, 240, 0.52) 1px solid;
     margin-bottom: .5rem;
     margin-top: .5rem;
 }
+
+.navbar-nav img{
+    height: 10vh;
+}
+
 
 /*Carrousel accueil*/
 
