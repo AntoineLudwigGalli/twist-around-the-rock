@@ -3,10 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\CarrouselImages;
+use App\Entity\Category;
+use App\Entity\Color;
+use App\Entity\Stone;
 use App\Form\CarrouselImagesFormType;
-use App\Form\ProductFormType;
+use App\Form\CategoryFormType;
+use App\Form\ColorFormType;
+use App\Form\StoneFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminPanelController extends AbstractController
 {
     #[Route('/admin/panel', name: 'admin_panel')]
+    #[isGranted('ROLE_ADMIN')]
     public function admin_home(ManagerRegistry $doctrine, PaginatorInterface $paginator): Response
     {
         $em = $doctrine->getManager();
@@ -34,6 +41,7 @@ class AdminPanelController extends AbstractController
     }
 
     #[Route('/admin/carrousel-images/liste', name: 'admin_carrousel_images_list')]
+    #[isGranted('ROLE_ADMIN')]
     public function admin_carrousel_images_list(ManagerRegistry $doctrine, Request $request, PaginatorInterface $paginator): Response
     {
         // On récupère dans l'URL la donnée GET page (si elle n'existe pas, la valeur retournée par défaut sera la page 1)
@@ -61,6 +69,7 @@ class AdminPanelController extends AbstractController
     }
 
     #[Route('/admin/carrousel-images/ajouter-une-image', name: 'admin_add_carrousel_image')]
+    #[isGranted('ROLE_ADMIN')]
     public function createCarrouselImage(ManagerRegistry $doctrine, Request $request): Response
     {
 
@@ -118,6 +127,7 @@ class AdminPanelController extends AbstractController
     }
 
     #[Route('/admin/carrousel-images/supprimer-une-image/{id}', name: 'admin_delete_carrousel_image', priority: 10)]
+    #[isGranted('ROLE_ADMIN')]
     public function carrouselImageDelete(CarrouselImages $carrouselImages, Request $request, ManagerRegistry $doctrine): Response
     {
 
@@ -147,6 +157,7 @@ class AdminPanelController extends AbstractController
      *
      */
     #[Route('/admin/carrousel-images/modifier-une-image/{id}', name: 'admin_edit_carrousel_image', priority: 10)]
+    #[isGranted('ROLE_ADMIN')]
     public function carrouselImageEdit(CarrouselImages $carrouselImages, Request $request, ManagerRegistry $doctrine): Response
     {
 
@@ -206,6 +217,7 @@ class AdminPanelController extends AbstractController
     }
 
     #[Route('/admin/blog/liste', name: 'admin_blog_articles_list')]
+    #[isGranted('ROLE_ADMIN')]
     public function admin_blog_articles_list(ManagerRegistry $doctrine, Request $request, PaginatorInterface $paginator): Response
     {
         // On récupère dans l'URL la donnée GET page (si elle n'existe pas, la valeur retournée par défaut sera la page 1)
@@ -237,6 +249,7 @@ class AdminPanelController extends AbstractController
 //    Produits
 
     #[Route('/admin/produits/liste', name: 'admin_products_list')]
+    #[isGranted('ROLE_ADMIN')]
     public function admin_products_list(ManagerRegistry $doctrine, Request $request, PaginatorInterface $paginator): Response
     {
         // On récupère dans l'URL la donnée GET page (si elle n'existe pas, la valeur retournée par défaut sera la page 1)
@@ -258,9 +271,71 @@ class AdminPanelController extends AbstractController
             $requestedPage, // Numéro de la page dont on veut les produits
             10); // Nombre de produits par page
 
+
+//        Boutons pour ajouter des catégories, couleurs et pierres
+
+        $category = new Category();
+        $color = new Color();
+        $stone = new Stone();
+
+
+        $categoryForm=$this->createForm(CategoryFormType::class, $category);
+        $categoryForm->handleRequest($request);
+
+        $colorForm=$this->createForm(ColorFormType::class, $color);
+        $colorForm->handleRequest($request);
+
+        $stoneForm=$this->createForm(StoneFormType::class, $stone);
+        $stoneForm->handleRequest($request);
+
+            if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
+                $newCategory = $categoryForm->get('name')->getData();
+                $category->setName($newCategory);
+
+                $em = $doctrine->getManager();
+                $em->persist($category);
+                $em->flush();
+
+                $this->addFlash('success', 'Catégorie ajoutée avec succès');
+
+                return $this->redirectToRoute('admin_products_list');
+            }
+
+            if ($colorForm->isSubmitted() && $colorForm->isValid()) {
+                $newColor = $colorForm->get('name')->getData();
+                $color->setName($newColor);
+
+                $em = $doctrine->getManager();
+                $em->persist($color);
+                $em->flush();
+
+                $this->addFlash('success', 'Catégorie ajoutée avec succès');
+
+                return $this->redirectToRoute('admin_products_list');
+            }
+
+            if ($stoneForm->isSubmitted() && $stoneForm->isValid()) {
+                $newStone = $stoneForm->get('name')->getData();
+                $stone->setName($newStone);
+
+                $em = $doctrine->getManager();
+                $em->persist($stone);
+                $em->flush();
+
+                $this->addFlash('success', 'Catégorie ajoutée avec succès');
+
+                return $this->redirectToRoute('admin_products_list');
+            }
+
+
+
+
         return $this->render('admin_panel/products-list.html.twig', [
             'controller_name' => 'AdminPanelController',
             'products' => $products,
+            'categoryForm' => $categoryForm->createView(),
+            'colorForm' => $colorForm->createView(),
+            'stoneForm' => $stoneForm->createView(),
         ]);
     }
 }

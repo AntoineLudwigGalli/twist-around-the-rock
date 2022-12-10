@@ -73,9 +73,9 @@
                                             {% endif %}
                                         </td>
                                         <td class="text-light text-center">{{ product.creationDate|date('d/m/Y') }}</td>
-                                        <td class="text-light text-center">{{ product.category }}</td>
-                                        <td class="text-light text-center">{{ product.color }}</td>
-                                        <td class="text-light text-center">{{ product.stone }}</td>
+                                        <td class="text-light text-center">{{ product.category|capitalize }}</td>
+                                        <td class="text-light text-center">{{ product.color|capitalize }}</td>
+                                        <td class="text-light text-center">{{ product.stone|capitalize }}</td>
                                         
                                         <td>
                                             <div>
@@ -128,6 +128,50 @@
             
             </div>
         
+        </div>
+        <div class="row d-flex flex-md-row justify-content-between mb-2">
+                <div class="col-md-3 btn btn-success mb-2 filter-data category">Ajouter une catégorie </div>
+            <div class="row d-flex flex-row justify-content-between filter-form-options category">
+                <div class="col-9">
+                    {{ form_start(categoryForm) }}
+                    {{ form_row(categoryForm.name) }}
+                </div>
+                <div class="col-1">
+                    {{ form_row(categoryForm.save) }}
+                    {{ form_end(categoryForm) }}
+                </div>
+                <div class="col-1 mx-2 cancel">
+                    <button class="btn btn-danger px-3">X</button>
+                </div>
+            </div>
+            <div class="col-md-3 btn btn-success mb-2 filter-data color">Ajouter une couleur </div>
+            <div class="row d-flex flex-row justify-content-between filter-form-options color">
+                <div class="col-9 ">
+                    {{ form_start(colorForm) }}
+                    {{ form_row(colorForm.name) }}
+                </div>
+                <div class="col-1 ">
+                    {{ form_row(colorForm.save) }}
+                    {{ form_end(colorForm) }}
+                </div>
+                <div class="col-1 mx-2 cancel">
+                    <button class="btn btn-danger px-3">X</button>
+                </div>
+            </div>
+            <div class="col-md-3 btn btn-success mb-2 filter-data stone">Ajouter une pierre </div>
+            <div class="row d-flex flex-row justify-content-between filter-form-options stone">
+                <div class="col-9 ">
+                    {{ form_start(stoneForm) }}
+                    {{ form_row(stoneForm.name) }}
+                </div>
+                <div class="col-1">
+                    {{ form_row(stoneForm.save) }}
+                    {{ form_end(stoneForm) }}
+                </div>
+                <div class="col-1 mx-2 cancel">
+                    <button class="btn btn-danger px-3">X</button>
+                </div>
+            </div>
         </div>
         <div class="row">
             <a href="{{ path('products_new_product') }}" class="btn btn-primary">Créer un produit</a>

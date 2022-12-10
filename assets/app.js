@@ -72,19 +72,83 @@ const categoryDropdown = document.querySelector('.category-dropdown');
 const colorDropdown = document.querySelector('.color-dropdown');
 const stoneDropdown = document.querySelector('.stone-dropdown');
 
-categories.classList.add('d-none');
-colors.classList.add('d-none');
-stones.classList.add('d-none');
+if (categories || colors || stones){
 
-filterButton.addEventListener('click', function (){
-    filterForm.classList.toggle('d-none');
-});
-categoryDropdown.addEventListener('click', function (){
-   categories.classList.toggle('d-none');
-});
-colorDropdown.addEventListener('click', function (){
-    colors.classList.toggle('d-none');
-});
-stoneDropdown.addEventListener('click', function (){
-    stones.classList.toggle('d-none');
-});
+    categories.classList.add('d-none');
+    colors.classList.add('d-none');
+    stones.classList.add('d-none');
+
+    filterButton.addEventListener('click', function (){
+        filterForm.classList.toggle('d-none');
+    });
+    categoryDropdown.addEventListener('click', function (){
+       categories.classList.toggle('d-none');
+    });
+    colorDropdown.addEventListener('click', function (){
+        colors.classList.toggle('d-none');
+    });
+    stoneDropdown.addEventListener('click', function (){
+        stones.classList.toggle('d-none');
+    });
+}
+
+
+// Ajout des catégories, pierres et couleurs
+
+const filterFormOptions = document.querySelectorAll('.filter-form-options');
+const cancelButtons = document.querySelectorAll('.cancel');
+const addButtons = document.querySelectorAll(".filter-data");
+const categoryButton = document.querySelector('.filter-data.category');
+const colorButton = document.querySelector('.filter-data.color');
+const stoneButton = document.querySelector('.filter-data.stone');
+const categoryForm = document.querySelector(".filter-form-options.category");
+const colorForm = document.querySelector(".filter-form-options.color");
+const stoneForm = document.querySelector(".filter-form-options.stone");
+if (filterFormOptions){
+    filterFormOptions.forEach(formOption =>
+        formOption.classList.add('d-none')
+    )
+
+    cancelButtons.forEach(cancelButton =>
+        cancelButton.addEventListener('click', function (){
+            addButtons.forEach(addButtons =>
+            addButtons.classList.remove('d-none')
+            )
+            filterFormOptions.forEach(formOption =>
+                formOption.classList.add('d-none')
+            )
+        })
+    )
+
+    categoryButton.addEventListener('click', function (){
+        categoryButton.classList.add('d-none');
+        colorButton.classList.remove('d-none');
+        stoneButton.classList.remove('d-none');
+        stoneForm.classList.add('d-none');
+        colorForm.classList.add('d-none');
+        categoryForm.classList.toggle('d-none');
+    });
+
+    colorButton.addEventListener('click', function (){
+        colorButton.classList.add('d-none');
+        categoryButton.classList.remove('d-none');
+        stoneButton.classList.remove('d-none');
+        categoryForm.classList.add('d-none');
+        stoneForm.classList.add('d-none');
+        colorForm.classList.toggle('d-none');
+    });
+
+    stoneButton.addEventListener('click', function (){
+        stoneButton.classList.add('d-none');
+        categoryButton.classList.remove('d-none');
+        colorButton.classList.remove('d-none');
+        categoryForm.classList.add('d-none');
+        colorForm.classList.add('d-none');
+        stoneForm.classList.toggle('d-none');
+    });
+
+
+}
+
+
+

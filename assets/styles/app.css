@@ -150,7 +150,14 @@ footer li a{
     width: 50%;
 }
 
+.form-check-label{
+    text-transform: capitalize;
+}
 
+.category-dropdown:hover, .color-dropdown:hover, .stone-dropdown:hover{
+    cursor: pointer;
+    font-style: italic;
+}
 
 
 
