@@ -1,10 +1,8 @@
-
+<div class="row d-md-flex flex-md-row flex-md-wrap">
 {% for product in products %}
     
     {#                 Un produit #}
-    <div class="row js-filter-content" id="product-{{ product.id }}">
-        
-        <div class="col-12">
+    <div class="col-12 col-md-4 js-filter-content" id="product-{{ product.id }}">
             
             <div class="card my-3">
                 
@@ -39,7 +37,7 @@
         
         </div>
     
-    </div>
+   
 
 {% else %}
     
@@ -49,5 +47,5 @@
 
 {% endfor %}
 
-
+</div>
 

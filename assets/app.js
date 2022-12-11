@@ -109,45 +109,48 @@ if (filterFormOptions){
     filterFormOptions.forEach(formOption =>
         formOption.classList.add('d-none')
     )
+    if (categoryButton && colorButton && stoneButton && cancelButtons){
+        cancelButtons.forEach(cancelButton =>
+            cancelButton.addEventListener('click', function (){
+                addButtons.forEach(addButtons =>
+                    addButtons.classList.remove('d-none')
+                )
+                filterFormOptions.forEach(formOption =>
+                    formOption.classList.add('d-none')
+                )
+            })
+        )
 
-    cancelButtons.forEach(cancelButton =>
-        cancelButton.addEventListener('click', function (){
-            addButtons.forEach(addButtons =>
-            addButtons.classList.remove('d-none')
-            )
-            filterFormOptions.forEach(formOption =>
-                formOption.classList.add('d-none')
-            )
-        })
-    )
+        categoryButton.addEventListener('click', function (){
+            categoryButton.classList.add('d-none');
+            colorButton.classList.remove('d-none');
+            stoneButton.classList.remove('d-none');
+            stoneForm.classList.add('d-none');
+            colorForm.classList.add('d-none');
+            categoryForm.classList.toggle('d-none');
+        });
 
-    categoryButton.addEventListener('click', function (){
-        categoryButton.classList.add('d-none');
-        colorButton.classList.remove('d-none');
-        stoneButton.classList.remove('d-none');
-        stoneForm.classList.add('d-none');
-        colorForm.classList.add('d-none');
-        categoryForm.classList.toggle('d-none');
-    });
+        colorButton.addEventListener('click', function (){
+            colorButton.classList.add('d-none');
+            categoryButton.classList.remove('d-none');
+            stoneButton.classList.remove('d-none');
+            categoryForm.classList.add('d-none');
+            stoneForm.classList.add('d-none');
+            colorForm.classList.toggle('d-none');
+        });
 
-    colorButton.addEventListener('click', function (){
-        colorButton.classList.add('d-none');
-        categoryButton.classList.remove('d-none');
-        stoneButton.classList.remove('d-none');
-        categoryForm.classList.add('d-none');
-        stoneForm.classList.add('d-none');
-        colorForm.classList.toggle('d-none');
-    });
-
-    stoneButton.addEventListener('click', function (){
-        stoneButton.classList.add('d-none');
-        categoryButton.classList.remove('d-none');
-        colorButton.classList.remove('d-none');
-        categoryForm.classList.add('d-none');
-        colorForm.classList.add('d-none');
-        stoneForm.classList.toggle('d-none');
-    });
+        stoneButton.addEventListener('click', function (){
+            stoneButton.classList.add('d-none');
+            categoryButton.classList.remove('d-none');
+            colorButton.classList.remove('d-none');
+            categoryForm.classList.add('d-none');
+            colorForm.classList.add('d-none');
+            stoneForm.classList.toggle('d-none');
+        });
+    }
 }
+
+
 
 
 

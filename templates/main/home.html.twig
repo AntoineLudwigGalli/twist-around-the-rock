@@ -8,13 +8,14 @@
 
 {% block body %}
 {#    Carrousel en banière #}
-    <div class="owl-carousel owl-theme mt-5">
+    <div class="owl-carousel owl-theme mt-5 mb-3">
         {% for carrouselImage in carrouselImages  %}
 {#            todo liipimagine pour normer les photos#}
-            <a href="{{ (carrouselImage.link != null) ? carrouselImage.link : '#' }}"><img src="{{ asset('images/carrousel_images/' ~ carrouselImage.image) }}" alt="{{ carrouselImage.name }}" class="carrousel-img img-fluid"> </a>
+            <a href="{{ (carrouselImage.link != null) ? carrouselImage.link : asset('images/carrousel_images/' ~ carrouselImage.image ) }}" {{ (carrouselImage.link != null) ? "" : 'target="_blank"' }} ><img src="{{ asset('images/carrousel_images/' ~ carrouselImage.image) }}" alt="{{
+            carrouselImage.name }}" class="carrousel-img img-fluid"> </a>
         {% endfor %}
     </div>
-    
+
 {#    Texte de présentation #}
     <div class="row">
         <div class="presentation-text col-10 offset-1">
@@ -23,32 +24,40 @@
     </div>
     
 {#    Produits à la une #}
+
+{#    todo ajouter produits à la une dynamiques #}
     <h2 class="text-light text-center mt-4">La sélection du chef</h2>
     <div class="row top-articles">
-        <ul class="d-flex flex-column align-items-center justify-content-center m-0 p-0">
-            <li class="col-8 offset-2 mx-0 my-3 text-center">
-                <img src="{{ asset('images/test1.jpg') }}" alt="">
-                <a href="#">Voir +</a>
+        <ul class="d-flex flex-column align-items-center justify-content-center m-0 p-0 flex-md-row justify-content-md-around">
+            <li class="col-8 offset-2 mx-0 my-3 text-center col-md-5 offset-md-1 col-lg-3">
+                <a href="#" class="hoverwrap">
+                    <img src="{{ asset('images/test2.png') }}" alt="">
+                    <h4 class="hovercap">En voir plus</h4>
+                </a>
             </li>
-            <li class="col-8 offset-2 mx-0 my-3 text-center">
-                <img src="{{ asset('images/test2.png') }}" alt="">
-                <a href="#">Voir +</a>
+            <li class="col-8 offset-2 mx-0 my-3 text-center col-md-5 offset-md-1 col-lg-3">
+                <a href="#" class="hoverwrap">
+                    <img src="{{ asset('images/test2.png') }}" alt="">
+                    <h4 class="hovercap">En voir plus</h4>
+                </a>
             </li>
-            <li class="col-8 offset-2 mx-0 my-3 text-center">
-                <img src="{{ asset('images/test1.jpg') }}" alt="">
-                <a href="#">Voir +</a>
+            <li class="col-8 offset-2 mx-0 my-3 text-center col-md-5 offset-md-1 col-lg-3">
+                <a href="#" class="hoverwrap">
+                    <img src="{{ asset('images/test2.png') }}" alt="">
+                    <h4 class="hovercap">En voir plus</h4>
+                </a>
             </li>
         </ul>
     </div>
-    
+
 {#  Le dernier article du blog  #}
     <h2 class="text-light text-center mt-4">Dernier article</h2>
     {% for article in articles %}
-<div class=" top-articles">
+        <div class="top-articles">
         {% if article.image != null %}
             <a href="{{ path('blog_publication_view', {'id': article.id, 'slug': article.slug
             }) }}" class="link-style">
-                <img src="{{ asset('images/article_images/' ~ article.image) }}" alt="Image de couverture de l'article {{ article.title }}" class="article-image-thumbnail col-10 offset-1 img-fluid">
+                <img src="{{ asset('images/article_images/' ~ article.image) }}" alt="Image de couverture de l'article {{ article.title }}" class="article-image-thumbnail col-10 offset-1 img-fluid col-md-8 offset-md-2 col-lg-6 offset-lg-3">
             </a>
         {% endif %}
     

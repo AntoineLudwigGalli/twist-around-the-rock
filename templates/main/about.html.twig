@@ -6,7 +6,9 @@
 
 {% endblock %}
 {% block body %}
+    {% if about %}
     
+ 
     <div class="row">
         
         <div class="col-12 col-md-10 mx-auto">
@@ -59,7 +61,11 @@
         </div>
     
     </div>
-   
+        {% else %}
+            <div class="row">
+                <p class="col-12 text-center alert alert-warning">Aucun twist dans l'air</p>
+            </div>
+    {% endif %}
     
 
 {% endblock %}

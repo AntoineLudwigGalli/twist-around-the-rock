@@ -1,56 +1,89 @@
 <header class="row">
-    <a href="{{ path('main_home') }}">
+{#    Logo qui renvoie à la pahge d'accueil versions mobile et tablette#}
+    <a href="{{ path('main_home') }}" class="d-lg-none">
         <img src="{{ asset('images/logo.png') }}" alt="Logo {{ site_name }}" title="Logo {{ site_name }}" class="col-12">
     </a>
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    
+{#    Boutons admin versions mobile et tablette#}
+    {% if app.user and app.user.roles[0] == "ROLE_ADMIN" %}
+        <ul class="admin-nav-buttons p-0 d-md-flex flex-md-row justify-content-md-around d-lg-none">
+            <li class="nav-item mb-2 col-10 offset-1 col-md-4 offset-md-0">
+                <a class="nav-link active text-light btn btn-primary" aria-current="page" href="{{ path('admin_panel') }}">
+                    Panel Admin
+                </a>
+            </li>
+            
+            <li class="nav-item col-10 offset-1 col-md-4 offset-md-0">
+                <a class="nav-link active text-light btn btn-danger" aria-current="page" href="{{ path('admin_logout') }}">
+                    Déconnexion
+                </a>
+            </li>
+        </ul>
+    {% endif %}
+    
+    
+{#    Menu principal#}
+    
+    <nav class="navbar navbar-expand-md navbar-dark ">
+  
         <button class="navbar-toggler col-2 offset-5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav col-10 offset-1">
-                <li class="nav-item mx-auto">
+    
+     
+        <div class="collapse navbar-collapse row mt-2 mx-2" id="navbarSupportedContent">
+            {#    Logo qui renvoie à la pahge d'accueil version ordi #}
+            <a href="{{ path('main_home') }}" class="d-none d-lg-block logo-nav col-lg-4" >
+                <img src="{{ asset('images/logo.png') }}" alt="Logo {{ site_name }}" title="Logo {{ site_name }}" class="col-12">
+            </a>
+            <ul class="navbar-nav col-10 offset-1 col-md-12 offset-md-0 col-lg-8 d-lg-flex flex-lg-row justify-content-lg-end mt-lg-5 pt-lg-2">
+                <li class="nav-item mx-auto d-md-none d-lg-block mx-lg-0">
                     <a class="nav-link active" aria-current="page" href="{{ path('main_home') }}">
                         <img src="{{ asset('images/nav-button-home.png') }}" alt="Bouton de navigation vers l'accueil">
                     </a>
                 </li>
                 <div class="separation-line col-8 offset-2"></div>
-                <li class="nav-item mx-auto">
+                <li class="nav-item mx-auto mx-lg-0">
                     <a class="nav-link active" aria-current="page" href="{{ path('products_') }}">
                         <img src="{{ asset('images/nav-button-real.png') }}" alt="Bouton de navigation vers les produits">
                     </a>
                 </li>
                 <div class="separation-line col-8 offset-2"></div>
-                <li class="nav-item mx-auto">
+                <li class="nav-item mx-auto mx-lg-0">
                     <a class="nav-link active" aria-current="page" href="{{ path('main_about') }}">
                         <img src="{{ asset('images/nav-button-twist.png') }}" alt="Bouton de navigation vers la présentation de l'artiste et de son atelier">
                     </a>
                 </li>
                 <div class="separation-line col-8 offset-2"></div>
-                <li class="nav-item mx-auto">
+                <li class="nav-item mx-auto mx-lg-0">
                     <a class="nav-link active" aria-current="page" href="{{ path('blog_publication_list') }}">
                         <img src="{{ asset('images/nav-button-blog.png') }}" alt="Bouton de navigation vers le blog et les nouveauts">
                     </a>
                 </li>
                 <div class="separation-line col-8 offset-2"></div>
-                <li class="nav-item mx-auto">
+                <li class="nav-item mx-auto mx-lg-0">
                     <a class="nav-link active" aria-current="page" href="{{ path('main_home') }}">
                         <img src="{{ asset('images/nav-button-contact.png') }}" alt="Bouton de navigation vers les contacts">
                     </a>
                 </li>
-                {% if app.user and app.user.roles[0] == "ROLE_ADMIN" %}
-                    <li class="nav-item mx-auto">
-                        <a class="nav-link active text-dark" aria-current="page" href="{{ path('admin_panel') }}">
-                            Panel Admin
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item mx-auto">
-                        <a class="nav-link active text-dark" aria-current="page" href="{{ path('admin_logout') }}">
-                            Déconnexion
-                        </a>
-                    </li>
-                {% endif %}
             </ul>
         </div>
     </nav>
+    
+    {#    Boutons admin en vue ordinateur#}
+    {% if app.user and app.user.roles[0] == "ROLE_ADMIN" %}
+        <ul class=" d-none admin-nav-buttons p-0 d-lg-flex flex-lg-row justify-content-lg-around">
+            <li class="nav-item mb-2 col-10 offset-1 col-md-4 offset-md-0">
+                <a class="nav-link active text-light btn btn-primary" aria-current="page" href="{{ path('admin_panel') }}">
+                    Panel Admin
+                </a>
+            </li>
+            
+            <li class="nav-item col-10 offset-1 col-md-4 offset-md-0">
+                <a class="nav-link active text-light btn btn-danger" aria-current="page" href="{{ path('admin_logout') }}">
+                    Déconnexion
+                </a>
+            </li>
+        </ul>
+    {% endif %}
 </header>
