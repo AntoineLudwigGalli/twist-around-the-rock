@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,14 @@ class Article
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $image = null;
+
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: ArticleCarrouselImage::class, orphanRemoval: true)]
+    private Collection $articleCarrouselImages;
+
+    public function __construct()
+    {
+        $this->articleCarrouselImages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +100,36 @@ class Article
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ArticleCarrouselImage>
+     */
+    public function getArticleCarrouselImages(): Collection
+    {
+        return $this->articleCarrouselImages;
+    }
+
+    public function addArticleCarrouselImage(ArticleCarrouselImage $articleCarrouselImage): self
+    {
+        if (!$this->articleCarrouselImages->contains($articleCarrouselImage)) {
+            $this->articleCarrouselImages->add($articleCarrouselImage);
+            $articleCarrouselImage->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleCarrouselImage(ArticleCarrouselImage $articleCarrouselImage): self
+    {
+        if ($this->articleCarrouselImages->removeElement($articleCarrouselImage)) {
+            // set the owning side to null (unless already changed)
+            if ($articleCarrouselImage->getArticle() === $this) {
+                $articleCarrouselImage->setArticle(null);
+            }
+        }
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\ArticleCarrouselImage;
+use App\Form\ArticleCarrouselImageFormType;
 use App\Form\ArticleFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
@@ -74,9 +76,12 @@ class BlogController extends AbstractController {
     #[ParamConverter('article', options: ['mapping' => ['id' => 'id', 'slug' => 'slug']])]
     public function publicationView(Article $article, Request $request, ManagerRegistry $doctrine): Response {
 
+        $articleCarrouselImagesRepo = $doctrine->getRepository(ArticleCarrouselImage::class);
+        $articleCarrouselImages = $articleCarrouselImagesRepo->findBy(['article' => $article->getId()]);
 
         return $this->render('blog/publication_view.html.twig', [
             'article' => $article,
+            'articleCarrouselImages' => $articleCarrouselImages,
         ]);
     }
 
@@ -228,4 +233,139 @@ class BlogController extends AbstractController {
             'articles' => $articles,
         ]);
     }
+
+
+
+    #[Route('{id}/ajouter-photo-carrousel', name: 'add_carousel_image', requirements: ["id" => "\d+"] )]
+    #[isGranted('ROLE_ADMIN')]
+    public function addArticleCarouselImage(Request $request, ManagerRegistry $doctrine, Article $article): \Symfony\Component\HttpFoundation\Response
+    {
+        $articleCarouselImage = new ArticleCarrouselImage();
+        $form=$this->createForm(ArticleCarrouselImageFormType::class);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $articleCarouselImage->setName($form->get('name')->getData());
+            $articleCarouselImage->setArticle($article);
+            $image = $form->get('image')->getData();
+
+            if(
+                $articleCarouselImage->getImage() != null &&
+                file_exists($this->getParameter('app.article.carrousel.image.folder') . $articleCarouselImage->getImage() )
+            ){
+                unlink($this->getParameter('app.article.carrousel.image.folder') . $articleCarouselImage->getImage() );
+            }
+
+
+            /*Génération nom*/
+            do{
+                $newFileName = md5( random_bytes(100) ) . '.' . $image->guessExtension();
+            } while (file_exists($this->getParameter('app.article.carrousel.image.folder') .$newFileName));
+
+            $articleCarouselImage->setImage($newFileName);
+
+            $em = $doctrine->getManager();
+            $em->persist($articleCarouselImage);
+            $em->flush();
+
+            $image -> move(
+                $this->getParameter('app.article.carrousel.image.folder'),
+                $newFileName,
+            );
+
+            $this->addFlash('success', 'Photo du carrousel ajoutée avec succès');
+
+            return $this->redirectToRoute('blog_publication_view', [
+                'id' => $article->getId(),
+                'slug' => $article->getSlug(),
+            ]);
+        }
+
+        return $this->render('blog/add_article_carousel_image.html.twig', [
+            'form' => $form->createView(),
+            'id' => $article->getId()
+        ]);
+    }
+
+    #[Route('{articleId}/editer-photo-carrousel/{id}', name: 'edit_carousel_image')]
+    #[isGranted('ROLE_ADMIN')]
+    public function editArticleCarouselPicture(Request $request, ManagerRegistry $doctrine, ArticleCarrouselImage $articleCarrouselImage): \Symfony\Component\HttpFoundation\Response
+    {
+
+        $form = $this->createForm(ArticleCarrouselImageFormType::class);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('image')->getData();
+
+            if (
+                $articleCarrouselImage->getImage() != null &&
+                file_exists($this->getParameter('app.article.carrousel.image.folder') . $articleCarrouselImage->getImage())
+            ) {
+                unlink($this->getParameter('app.article.carrousel.image.folder') . $articleCarrouselImage->getImage());
+            }
+
+
+            /*Génération nom*/
+            do {
+                $newFileName = md5(random_bytes(100)) . '.' . $image->guessExtension();
+            } while (file_exists($this->getParameter('app.article.carrousel.image.folder') . $newFileName));
+
+            $articleCarrouselImage->setImage($newFileName);
+
+            $em = $doctrine->getManager();
+            $em->flush();
+
+            $image->move(
+                $this->getParameter('app.article.carrousel.image.folder'),
+                $newFileName,
+            );
+
+            $this->addFlash('success', 'Photo du carrousel modifiée avec succès');
+
+            return $this->redirectToRoute('blog_publication_view', [
+                'id' => $articleCarrouselImage->getArticle()->getId(),
+                'slug' => $articleCarrouselImage->getArticle()->getSlug(),
+            ]);
+        }
+
+        return $this->render('blog/edit_article_carrousel_image.html.twig', [
+            'form' => $form->createView(),
+            'article_carousel_image' => $articleCarrouselImage,
+            'articleId' => $articleCarrouselImage->getArticle(),
+        ]);
+    }
+
+    #[Route('/supprimer-photo-carrousel/{id}', name: 'delete_carousel_image', priority: 10)]
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteArticleCarouselPicture(ArticleCarrouselImage $articleCarrouselImage, Request $request, ManagerRegistry $doctrine): \Symfony\Component\HttpFoundation\RedirectResponse
+    {
+//        Token CSRF
+        $csrfToken = $request->query->get('csrf_token', '');
+
+        if (!$this->isCsrfTokenValid('delete_article_carousel_image' . $articleCarrouselImage->getId(), $csrfToken)) {
+
+            $this->addFlash('error','Token de sécurité invalide, veuillez ré-essayer.');
+        }
+        else {
+            unlink($this->getParameter('app.article.carrousel.image.folder') . $articleCarrouselImage->getImage());
+
+            // Suppression de l'image en BDD
+            $em = $doctrine->getManager();
+            $em->remove($articleCarrouselImage);
+            $em->flush();
+
+            // Message flash de succès
+            $this->addFlash('success', "La photo a été supprimée avec succès !");
+        }
+        // Redirection vers la page qui liste les events
+        return $this->redirectToRoute('blog_publication_view', [
+            'product_carrousel_image' => $articleCarrouselImage,
+            'id' => $articleCarrouselImage->getArticle()->getId(),
+            'slug' => $articleCarrouselImage->getArticle()->getSlug(),
+        ]);
+    }
+
 }

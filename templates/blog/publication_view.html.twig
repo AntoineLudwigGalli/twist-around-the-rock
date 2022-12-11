@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ article.title }}{% endblock %}
+{% block cssIncludes %}
+    <link rel="stylesheet" href="{{ asset('libraries/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css') }}">
 
+{% endblock %}
 {% block body %}
     
     
@@ -33,6 +36,26 @@
                     <div class="mb-2">
                         {{ article.content|purify }}
                     </div>
+    
+                    {#                        Carrousel par produit #}
+                    <div class="owl-carousel owl-theme mt-5">
+                        {% if app.user and app.user.roles[0] == "ROLE_ADMIN" %}
+                            <div class="carrousel-img p-5 mt-5 d-flex flex-row align-items-center justify-content-center">
+                                <a href="{{ path('blog_add_carousel_image', {'id': article.id}) }}" class="btn btn-dark">+</a>
+                            </div>
+                        {% endif %}
+                        {% for articleCarrouselImage in articleCarrouselImages  %}
+                            {% if app.user and app.user.roles[0] == "ROLE_ADMIN" %}
+                                <a href="{{ path('blog_edit_carousel_image', {'id': articleCarrouselImage.id, 'articleId': articleCarrouselImage.article.id }) }}">
+                            {% else %}
+                                <a href="{{ asset('images/article_carrousel_images/' ~ articleCarrouselImage.image) }}" target="_blank">
+                            {% endif %}
+                            {#                                        todo liipimagine pour normer les photos#}
+                            <img src="{{ asset('images/article_carrousel_images/' ~ articleCarrouselImage.image) }}" alt="{{ articleCarrouselImage.name }}" class="carrousel-img img-fluid">
+                            </a>
+                            </a>
+                        {% endfor %}
+                    </div>
                     
                     <footer class="blockquote-footer mt-4">
                         Publié le <span class="quote-text">{{ article.publicationDate|date('d/m/Y à H\\hi') }}</span>.
@@ -60,5 +83,13 @@
 
 
 {% endblock %}
+{% block jsIncludes %}
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous">
+    </script>
+    <script src="{{ asset('libraries/OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/owl-carrousel-custom-settings.js') }}"></script>
 
+{% endblock %}
 
