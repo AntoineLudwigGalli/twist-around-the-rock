@@ -58,8 +58,8 @@ if (slider) {
 
 
 
-// Filter settings
-new Filter(document.querySelector('.js-filter'));
+// Filter settings (todo à réactiver si besoin de filtre dynamique en ajax
+// new Filter(document.querySelector('.js-filter'));
 
 // Dropdown filter button
 const filterButton = document.querySelector('.filter-button');

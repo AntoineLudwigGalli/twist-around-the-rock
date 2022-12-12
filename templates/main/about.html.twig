@@ -8,14 +8,11 @@
 {% block body %}
     {% if about %}
     
- 
     <div class="row">
         
         <div class="col-12 col-md-10 mx-auto">
             
-            <article class="card my-2">
-                
-                <div class="card-body">
+            <article class="about-card my-2 d-md-flex flex-md-column align-items-md-center">
                     
                     <div class="row">
                         <h1 class="col-12 text-center my-5">{{ about.title }}</h1>
@@ -59,8 +56,7 @@
             </article>
         
         </div>
-    
-    </div>
+
         {% else %}
             <div class="row">
                 <p class="col-12 text-center alert alert-warning">Aucun twist dans l'air</p>

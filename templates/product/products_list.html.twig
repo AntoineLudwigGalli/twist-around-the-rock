@@ -9,18 +9,20 @@
     </div>
     <div class="js-filter">
         
-       
-        
         <div class="row d-flex flex-column flex-md-row mb-2 text-light">
-            {{ form_start(form, { attr: {class: 'js-filter-form'}}) }}
-            {{ form_row(form.q) }}
-            <button class="btn btn-primary col-12 mb-2" type="submit">Filtrer</button>
+         
+
             <div class="row mx-1">
                
-                    <div class="btn btn-light filter-button col-6">Filtrer les produits</div>
+                    <div class="btn btn-light filter-button col-6 col-lg-2 offset-lg-0">Filtrer les produits</div>
                     {{ include('product/product_sorting.html.twig') }}
                 
                 <div class="filter-form d-none">
+                    <div class="mt-4">
+                        {{ form_start(form, { attr: {class: 'js-filter-form'}}) }}
+                        {{ form_row(form.q) }}
+                    </div>
+                    
                     <div class="col-6 d-flex flex-row  align-items-center category-dropdown">
                         {{ form_label(form.categories) }}
                         <i class="fa-solid fa-chevron-down"></i>
@@ -28,13 +30,13 @@
                         {{ form_widget(form.categories) }}
                     
     
-                    <div class="col-6 d-flex flex-row align-items-center color-dropdown">
+                    <div class="col-6 d-flex flex-row align-items-center color-dropdown mt-3">
                         {{ form_label(form.colors) }}
                         <i class="fa-solid fa-chevron-down"></i>
                     </div>
                     {{ form_widget(form.colors) }}
     
-                    <div class="col-6 d-flex flex-row align-items-center stone-dropdown">
+                    <div class="col-6 d-flex flex-row align-items-center stone-dropdown mt-3">
                         {{ form_label(form.stones) }}
                         <i class="fa-solid fa-chevron-down"></i>
                     </div>
@@ -42,11 +44,20 @@
                     
                     <div class="mt-3">{{ form_row(form.available) }}</div>
                     
-                    {{ form_row(form.min) }}
-                    {{ form_row(form.max) }}
+                    <div class="d-lg-flex flex-lg-row justify-content-lg-around">
+                        {{ form_row(form.min) }}
+                        {{ form_row(form.max) }}
+                    </div>
+                   
                     <div id="price-slider" data-min="{{ min }}" data-max="{{ max }}"></div>
+                    <div class="row d-flex flex-row align-items-center mt-4">
+                        <button class="btn btn-primary col-12 col-lg-3 offset-lg-2" type="submit">Filtrer</button>
+                        <a href="{{ path('products_') }}" class="btn btn-danger col-lg-3 offset-lg-2">Réinitialiser le filtre</a>
+                    </div>
+                   
                 </div>
             </div>
+
             
             {{ form_end(form) }}
         </div>

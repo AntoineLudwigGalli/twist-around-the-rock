@@ -272,4 +272,11 @@ class MainController extends AbstractController
         ]);
     }
 
+
+    #[Route('/contactez-moi', name: 'contact')]
+    public function contact(): \Symfony\Component\HttpFoundation\Response
+    {
+
+        return $this->render('main/contact.html.twig');
+    }
 }

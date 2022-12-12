@@ -12,7 +12,7 @@
         {% for carrouselImage in carrouselImages  %}
 {#            todo liipimagine pour normer les photos#}
             <a href="{{ (carrouselImage.link != null) ? carrouselImage.link : asset('images/carrousel_images/' ~ carrouselImage.image ) }}" {{ (carrouselImage.link != null) ? "" : 'target="_blank"' }} ><img src="{{ asset('images/carrousel_images/' ~ carrouselImage.image) }}" alt="{{
-            carrouselImage.name }}" class="carrousel-img img-fluid"> </a>
+            carrouselImage.name }}" class="carrousel-img-home img-fluid"> </a>
         {% endfor %}
     </div>
 

@@ -20,7 +20,7 @@ class SearchFormType extends AbstractType
     {
         $builder
             ->add('q', TextType::class, [
-                'label' => false,
+                'label' => "Trouvez votre bonheur:",
                 'required' => false,
                 'attr' =>[
                     'placeholder' => 'Trouvez votre bonheur'

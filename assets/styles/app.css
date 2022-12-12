@@ -3,6 +3,10 @@
     font-family: "Dancing Script";
     src: url("../../public/fonts/DancingScript/DancingScript-VariableFont_wght.ttf");
 }
+@font-face {
+    font-family: "Roboto";
+    src: url("../../public/fonts/Roboto/Roboto-Regular.ttf");
+}
 
 body{
     background-image: url("../../public/images/background.png");
@@ -12,6 +16,15 @@ body{
     font-size: 1.2rem;
     overflow-x: hidden;
     width: 100%;
+    color: #f0f0f0;
+}
+
+.font-italic{
+    font-style: italic;
+}
+
+.font-bold{
+    font-weight: bolder;
 }
 
 /*Header*/
@@ -47,7 +60,7 @@ nav{
 
 /*Carrousel accueil*/
 
-.carrousel-img{
+.carrousel-img-home{
     border: #f0f0f0 2px solid;
     border-radius: 15px;
     max-height: 35vh;
@@ -91,6 +104,10 @@ nav{
 
 footer .copyrights{
     font-size: .8rem;
+}
+
+footer .copyrights a{
+    font-family: 'Roboto', Sans-Serif, Serif;
 }
 
 footer ul{
@@ -146,6 +163,29 @@ footer li a{
     font-style: italic;
 }
 
+.blog-card img{
+    transition: all .4s ease-in-out;
+    width: 100%;
+    border-radius: 20px;
+    height: 40vh;
+}
+
+.blog-card a{
+    text-decoration: none;
+    color: #f0f0f0;
+    text-align: center;
+}
+
+.blog-card.view{
+    color: #f0f0f0;
+    font-family: 'Roboto', Sans-Serif, serif;
+}
+
+.blog-card.view .article-image{
+    width: 95%;
+    margin: 0 2.5%;
+}
+
 /*Liste des produits*/
 
 .js-filter-sorting a{
@@ -191,6 +231,40 @@ footer li a{
     text-align: center;
 }
 
+/*Product view*/
+.product.card-view{
+    color: #f0f0f0;
+    font-family: 'Roboto', Sans-Serif, serif;
+}
+
+.product.card-view .article-image{
+    width: 95%;
+    margin: 0 2.5%;
+}
+/* About / Twist section*/
+
+.about-card{
+    color: #f0f0f0;
+    font-family: 'Roboto', Sans-Serif, serif;
+}
+
+.about-card .article-image{
+    width: 95%;
+    margin: 0 2.5%;
+}
+
+/*Contacts*/
+#contact-section h1{
+    font-size: 3rem;
+}
+#contact-section h1, #contact-section h2, #contact-section p{
+    text-align: center;
+}
+
+#contact-section a{
+    font-size: 1.4rem;
+    color: white;
+}
 
 
 @media screen and (min-width: 768px){
@@ -231,10 +305,56 @@ footer li a{
         height: 30vh;
     }
 
+    .product.card-view{
+        color: #f0f0f0;
+        font-family: 'Roboto', Sans-Serif, serif;
+    }
+
+    .product.card-view .article-image{
+        width: auto;
+        margin: auto;
+        max-height: 30vh;
+    }
+
+    /* About / Twist section*/
+
+    .about-card{
+        color: #f0f0f0;
+        font-family: 'Roboto', Sans-Serif, serif;
+    }
+
+    .about-card .article-image{
+        width: auto;
+        margin: auto;
+        max-height: 30vh;
+    }
+
+/*    Blog*/
+    .blog-card img{
+        width: 100%;
+        border-radius: 20px;
+        height: 20vh;
+    }
+
+    .blog-card.view{
+        color: #f0f0f0;
+        font-family: 'Roboto', Sans-Serif, serif;
+    }
+
+    .blog-card.view .article-image{
+        width: auto;
+        margin: auto;
+        max-height: 30vh;
+    }
+
+/*    Contacts*/
+    #contact-section h2, #contact-section p{
+        width: 80%;
+        margin: 0 10%;
+    }
 }
 
 @media screen and (min-width: 992px){
-    /* Header */
 
     /*    Header*/
     .navbar-nav{
@@ -266,7 +386,7 @@ footer li a{
         margin-left: 2rem;
     }
 
-    .carrousel-img{
+    .carrousel-img-home{
         border: #f0f0f0 2px solid;
         border-radius: 15px;
         max-height: 60vh;
@@ -318,4 +438,27 @@ footer li a{
     .product-card img:hover{
         transform: scale(130%);
     }
+
+    .product-card img{
+        height: 40vh;
+    }
+    .form-check{
+        width: 25%;
+    }
+
+/*    Carrousel en bas des articles, produits et twist*/
+    .carrousel-img{
+        border: #f0f0f0 2px solid;
+        border-radius: 15px;
+        width: auto;
+        height: 60vh;
+
+    }
+
+    /*    Contacts*/
+    #contact-section h2, #contact-section p{
+        width: 60%;
+        margin: 0 20%;
+    }
+
 }

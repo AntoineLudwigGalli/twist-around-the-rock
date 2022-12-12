@@ -1,4 +1,5 @@
-import {Flipper, spring} from "react-flip-toolkit";
+import {Flipper} from "react-flip-toolkit";
+import {spring} from "react-flip-toolkit";
 
 /**
  * @property {HTMLElement} pagination
@@ -15,7 +16,8 @@ export default class Filter {
      * @param {HTMLElement|null} element
      */
     constructor(element) {
-        if (element === null) {
+        if (element ===
+            null) {
             return;
         }
         this.pagination =
@@ -51,7 +53,7 @@ export default class Filter {
         });
 
         if (this.moreNav){
-            this.pagination.innerHTML = '<button class="btn btn-light col-10 offset-1 col-md-6 offset-md-3">Voir plus</button>';
+            this.pagination.innerHTML = '<button class="btn btn-outline-primary">Voir plus</button>';
             this.pagination.querySelector('button').addEventListener('click', this.loadMore.bind(this));
         } else {
             this.pagination.addEventListener('click', aClickListener);
@@ -95,10 +97,10 @@ export default class Filter {
         if (response.status >= 200 && response.status < 300) {
             const data = await response.json();
             this.content.innerHTML = data.content;
-            // this.sorting.innerHTML = data.sorting;
+            this.sorting.innerHTML = data.sorting;
             if (!this.moreNav) {
                 this.pagination.innerHTML += data.pagination;
-            } else if (this.page === data.pages) {
+            } else if (this.page === data.page) {
                 this.pagination.style.display = 'none';
             } else {
                 this.pagination.style.display = 'block';
@@ -112,68 +114,68 @@ export default class Filter {
         }
     }
 
-    /**Remplace les éléments de la grille avec un effet d'animation
+    /**Remplace les éléments de la grille avec un effet d'adnimation
      * @param {string} content
      */
-    flipContent(content, append) {
-        const springConfig = 'gentle';
-        const exitSpring = function (element, index, complete) {
-            spring({
-                config: 'stiff',
-                values: {
-                    translateY: [0, -20],
-                    opacity: [1, 0]
-                },
-                onUpdate: ({ translateY, opacity }) => {
-                    element.style.opacity = opacity;
-                    element.style.transform = `translateY(${translateY}px)`;
-                },
-                onComplete: complete
-            });
-        }
-        const appearSpring = function (element, index) {
-            spring({
-                config: 'stiff',
-                values: {
-                    translateY: [20, 0],
-                    opacity: [0, 1]
-                },
-                delay: index*20,
-
-                onUpdate: ({ translateY, opacity }) => {
-                    element.style.opacity = opacity;
-                    element.style.transform = `translateY(${translateY}px)`;
-                },
-            });
-        }
-        const flipper = new Flipper({
-            element: this.content
-        })
-        this.content.innerHTML.children.forEach(c => {
-            flipper.addFlipped({
-                element,
-                spring: springConfig,
-                flipId: element.id,
-                shouldFlip: false,
-                onExit: exitSpring,
-            })
-        })
-        flipper.recordBeforeUpdate()
-        if (append) {
-            this.content.innerHTML += content;
-        } else {
-            this.content.innerHTML = content
-        }
-        this.content.innerHTML.children.forEach(c => {
-            flipper.addFlipped({
-                element,
-                spring: springConfig,
-                flipId: element.id,
-                onAppear: appearSpring,
-            })
-        })
-        flipper.update();
-    }
+    // flipContent(content, append) {
+    //     const springConfig = 'gentle';
+    //     const exitSpring = function (element, index, complete) {
+    //         spring({
+    //             config: 'stiff',
+    //             values: {
+    //                 translateY: [0, -20],
+    //                 opacity: [1, 0]
+    //             },
+    //             onUpdate: ({ translateY, opacity }) => {
+    //                 element.style.opacity = opacity;
+    //                 element.style.transform = `translateY(${translateY}px)`;
+    //             },
+    //             onComplete: complete
+    //         });
+    //     }
+    //     const appearSpring = function (element, index) {
+    //         spring({
+    //             config: 'stiff',
+    //             values: {
+    //                 translateY: [20, 0],
+    //                 opacity: [0, 1]
+    //             },
+    //             delay: index*20,
+    //
+    //             onUpdate: ({ translateY, opacity }) => {
+    //                 element.style.opacity = opacity;
+    //                 element.style.transform = `translateY(${translateY}px)`;
+    //             },
+    //         });
+    //     }
+    //     const flipper = new Flipper({
+    //         element: this.content
+    //     })
+    //     this.content.innerHTML.children.forEach(c => {
+    //         flipper.addFlipped({
+    //             element,
+    //             spring: springConfig,
+    //             flipId: element.id,
+    //             shouldFlip: false,
+    //             onExit: exitSpring,
+    //         })
+    //     })
+    //     flipper.recordBeforeUpdate()
+    //     if (append) {
+    //         this.content.innerHTML += content;
+    //     } else {
+    //         this.content.innerHTML = content
+    //     }
+    //     this.content.innerHTML.children.forEach(c => {
+    //         flipper.addFlipped({
+    //             element,
+    //             spring: springConfig,
+    //             flipId: element.id,
+    //             onAppear: appearSpring,
+    //         })
+    //     })
+    //     flipper.update();
+    // }
 
     updatePrices({min, max}){
         const slider = document.getElementById('price-slider');

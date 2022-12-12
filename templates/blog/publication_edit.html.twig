@@ -10,7 +10,7 @@
         <p class="text-center col-12 ">
             
             <a href="{{ path('blog_publication_view', {'id': form.vars.value.id, 'slug': form.vars.value.slug}) }}"
-                    class="text-decoration-none">Revenir sur l'article</a>
+                    class="btn btn-danger">Revenir sur l'article</a>
         </p>
     </div>
     <div class="row">
@@ -18,7 +18,8 @@
             
             {# Affichage du formulaire de création d'article #}
             {{ form(form) }}
-        
+            <a href="{{ path('blog_publication_view', {'id': form.vars.value.id, 'slug': form.vars.value.slug}) }}"
+                    class="btn btn-danger col-12">Retour</a>
         </div>
     </div>
 

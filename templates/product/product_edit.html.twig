@@ -18,7 +18,8 @@
             
             {# Affichage du formulaire de création d'article #}
             {{ form(form) }}
-        
+            <a href="{{ path('admin_products_list', {'id': form.vars.value.id, 'slug': form.vars.value.slug}) }}"
+                    class="col-12 link-style back btn btn-danger">Revenir à la liste</a>
         </div>
     </div>
 

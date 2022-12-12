@@ -13,7 +13,7 @@
         "doctrine/orm": "^2.12",
         "exercise/htmlpurifier-bundle": "^4.0",
         "friendsofsymfony/ckeditor-bundle": "^2.4",
-        "helios-ag/fm-elfinder-bundle": "^12.1",
+        "helios-ag/fm-elfinder-bundle": "^12.2",
         "knplabs/knp-paginator-bundle": "^6.0",
         "liip/imagine-bundle": "^2.10",
         "phpdocumentor/reflection-docblock": "^5.3",
