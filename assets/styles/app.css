@@ -178,6 +178,19 @@ footer li a{
     font-style: italic;
 }
 
+.product-card img{
+    transition: all .4s ease-in-out;
+    width: 100%;
+    border-radius: 20px;
+    height: 40vh;
+}
+
+.product-card a{
+    text-decoration: none;
+    color: #f0f0f0;
+    text-align: center;
+}
+
 
 
 @media screen and (min-width: 768px){
@@ -214,9 +227,10 @@ footer li a{
     }
 
 /*    Produits*/
-    .card{
-
+    .product-card img{
+        height: 30vh;
     }
+
 }
 
 @media screen and (min-width: 992px){
@@ -298,7 +312,10 @@ footer li a{
         font-size: 1.5rem;
     }
 
+/*    Product card*/
 
 
-
+    .product-card img:hover{
+        transform: scale(130%);
+    }
 }

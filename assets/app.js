@@ -23,7 +23,6 @@ import noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.min.css';
 //Import Filter
 import Filter from './modules/Filter';
-import * as events from "events";
 
 // NoUiSlider pour le slider des prix
 const slider = document.getElementById('price-slider');

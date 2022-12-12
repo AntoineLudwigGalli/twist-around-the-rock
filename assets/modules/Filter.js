@@ -1,5 +1,4 @@
-import {Flipper} from "react-flip-toolkit";
-import {spring} from "react-flip-toolkit";
+import {Flipper, spring} from "react-flip-toolkit";
 
 /**
  * @property {HTMLElement} pagination
@@ -16,8 +15,7 @@ export default class Filter {
      * @param {HTMLElement|null} element
      */
     constructor(element) {
-        if (element ===
-            null) {
+        if (element === null) {
             return;
         }
         this.pagination =
@@ -53,7 +51,7 @@ export default class Filter {
         });
 
         if (this.moreNav){
-            this.pagination.innerHTML = '<button class="btn btn-outline-primary">Voir plus</button>';
+            this.pagination.innerHTML = '<button class="btn btn-light col-10 offset-1 col-md-6 offset-md-3">Voir plus</button>';
             this.pagination.querySelector('button').addEventListener('click', this.loadMore.bind(this));
         } else {
             this.pagination.addEventListener('click', aClickListener);
@@ -103,7 +101,7 @@ export default class Filter {
             } else if (this.page === data.pages) {
                 this.pagination.style.display = 'none';
             } else {
-                this.pagination.style.display = block;
+                this.pagination.style.display = 'block';
             }
             this.updatePrices(data);
             params.delete('ajax');
@@ -114,14 +112,14 @@ export default class Filter {
         }
     }
 
-    /**Remplace les éléments de la grille avec un effet d'adnimation
+    /**Remplace les éléments de la grille avec un effet d'animation
      * @param {string} content
      */
     flipContent(content, append) {
         const springConfig = 'gentle';
         const exitSpring = function (element, index, complete) {
             spring({
-                config: stiff,
+                config: 'stiff',
                 values: {
                     translateY: [0, -20],
                     opacity: [1, 0]
@@ -135,7 +133,7 @@ export default class Filter {
         }
         const appearSpring = function (element, index) {
             spring({
-                config: stiff,
+                config: 'stiff',
                 values: {
                     translateY: [20, 0],
                     opacity: [0, 1]
