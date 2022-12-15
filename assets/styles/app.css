@@ -18,6 +18,9 @@ body{
     width: 100%;
     color: #f0f0f0;
 }
+.btn, .text-warning, .text-danger{
+    font-family: "Roboto", Sans-Serif, Serif;
+}
 
 .font-italic{
     font-style: italic;
@@ -89,7 +92,10 @@ nav{
 /*Articles à la une*/
 .top-articles a{
     color: #f0f0f0;
+}
 
+.top-articles li{
+    list-style-type: none;
 }
 
 .top-articles img{
@@ -240,6 +246,7 @@ footer li a{
 .product.card-view .article-image{
     width: 95%;
     margin: 0 2.5%;
+    border-radius: 10%;
 }
 /* About / Twist section*/
 
@@ -253,12 +260,18 @@ footer li a{
     margin: 0 2.5%;
 }
 
+
+
 /*Contacts*/
 #contact-section h1{
     font-size: 3rem;
 }
 #contact-section h1, #contact-section h2, #contact-section p{
     text-align: center;
+}
+
+#contact-section p{
+    font-family: "Roboto", Sans-Serif, Serif;
 }
 
 #contact-section a{
@@ -296,6 +309,18 @@ footer li a{
     }
 
 /*    Accueil */
+
+
+    .carrousel-img-home, .carrousel-img{
+        border: #f0f0f0 2px solid;
+        border-radius: 15px;
+        width: auto !important;
+        margin: auto;
+        max-height: 30vh !important;
+        /*margin-left: 15vw;*/
+        object-fit: scale-down;
+    }
+
     .top-articles ul{
         flex-wrap: wrap;
     }
@@ -386,13 +411,10 @@ footer li a{
         margin-left: 2rem;
     }
 
-    .carrousel-img-home{
-        border: #f0f0f0 2px solid;
-        border-radius: 15px;
-        max-height: 60vh;
-        max-width: 70vw;
-        margin-left: 15vw;
+    .carrousel-img-home, .carrousel-img{
+        max-height: 60vh !important;
     }
+
 
 /*    Accueil*/
 
@@ -444,15 +466,6 @@ footer li a{
     }
     .form-check{
         width: 25%;
-    }
-
-/*    Carrousel en bas des articles, produits et twist*/
-    .carrousel-img{
-        border: #f0f0f0 2px solid;
-        border-radius: 15px;
-        width: auto;
-        height: 60vh;
-
     }
 
     /*    Contacts*/

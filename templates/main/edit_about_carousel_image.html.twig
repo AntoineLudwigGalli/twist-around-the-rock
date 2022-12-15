@@ -18,9 +18,10 @@
     </div>
     <div class="row d-flex flex-row">
         <div class="col-md-8 offset-md-3 d-flex flex-row justify-content-between">
-            <a href="{{ path('main_delete_about_carousel_picture', {'id': about_carousel_image.id, 'csrf_token' : csrf_token('delete_about_carousel_image' ~ about_carousel_image.id)}) }}" onclick="return confirm( 'Confirmez-vous la suppression de cette image du carousel ?')" class="col-5 btn
-            btn-warning">Supprimer</a>
-            <a href="{{ path('main_about') }}" class="col-5 offset-2 btn btn-danger">Annuler</a>
+           
+            <a href="{{ path('main_about') }}" class="col-5  btn btn-danger">Annuler</a>
+            <a href="{{ path('main_delete_about_carousel_picture', {'id': about_carousel_image.id, 'csrf_token' : csrf_token('delete_about_carousel_image' ~ about_carousel_image.id)}) }}" onclick="return confirm( 'Confirmez-vous la suppression de cette image du carousel ?')" class="col-5 offset-2 btn
+            btn-danger">Supprimer</a>
         </div>
     </div>
 

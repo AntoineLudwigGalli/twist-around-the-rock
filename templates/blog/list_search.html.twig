@@ -49,64 +49,40 @@
             
             {# Boucle pour parcourir tous les articles à afficher #}
             {% for article in articles %}
-                
-                {# Un article #}
-                <div class="row">
-                    
-                    <div class="col-12">
-                        
-                        <div class="card my-3">
-                            
-                            <div class="card-header">
-                                <a href="{{ path('blog_publication_view', {'id': article.id, 'slug': article.slug
-                                }) }}" class="link-style">{{ article.title }}
-                                </a>
-                            </div>
-                            
-                            <div class="card-body">
-                                
-                                <div class="mb-2">{{ article.content|striptags|excerpt(100) }}
-                                    <a class="link-style italic" href="{{ path ('blog_publication_view', {'id': article.id, 'slug': article.slug }) }}">
-                                        ...Lire la suite</a>
-                                </div>
-                                
-                                <footer class="blockquote-footer my-2">Publié le
-                                    <span class="quote-text">{{ article.publicationDate|date('d/m/Y à H\\hi') }}</span>.
-                                </footer>
-                                
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <div class="mt-3">
-                                        <a onclick="return confirm('Êtes-vous sur de vouloir modifier cet article ?')"
-                                                href="{{ path('blog_publication_edit', {'id': article.id}) }}"
-                                                class="text-decoration-none text-warning me-3">
-                                            <i class="fa-solid  fa-pen-to-square me-2"></i>
-                                            Modifier
-                                        </a>
-                                        
-                                        <a onclick="return confirm('Êtes-vous sur de vouloir supprimer cet article ?')"
-                                                href="{{ path('blog_publication_delete', {'id': article.id, 'csrf_token' : csrf_token('blog_publication_delete_' ~ article.id) }) }}"
-                                                class="text-decoration-none text-danger">
-                                            <i class="fa-solid fa-trash-can me-2"></i>
-                                            Supprimer
-                                        </a>
-                                    </div>
-                                
-                                {% endif %}
-                            
-                            </div>
-                        
-                        </div>
-                    
+        
+                {#                 Un article #}
+        
+                <div class="col-12 col-md-6 col-lg-3 mb-md-3 mx-lg-2">
+                    <div class="blog-card mb-3">
+                        <a href="{{ path('blog_publication_view', {'id': article.id, 'slug': article.slug
+                        }) }}" class="link-style">
+                            {% if article.image != null %}
+                                <img src="{{ asset('images/article_images/' ~ article.image) }}" alt="Image de couverture de l'article {{ article.title }}" class="article-image-thumbnail img-fluid img-thumbnail">
+                            {% endif %}
+                            <h4>{{ article.title }}</h4>
+                        </a>
                     </div>
-                
-                </div>
             
+            
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="mb-3 d-flex flex-row justify-content-center">
+                            <a href="{{ path('blog_publication_edit', {'id': article.id}) }}" class="text-decoration-none text-warning me-3"> <i class="fa-solid  fa-pen-to-square me-2"></i> Modifier </a>
+                    
+                            <a onclick="return confirm('Êtes-vous sur de vouloir supprimer ce produit ?')" href="{{ path('products_delete', {'id': article.id, 'csrf_token' : csrf_token('blog_publication_delete_' ~ article.id) }) }}" class="text-decoration-none text-danger"> <i
+                                        class="fa-solid fa-trash-can me-2"></i> Supprimer </a>
+                        </div>
+            
+                    {% endif %}
+        
+                </div>
+    
             {% else %}
-                
+        
                 <div class="row">
-                    <p class="col-12 text-center alert alert-warning">Aucune publication à afficher</p>
+                    <p class="col-12 text-center alert alert-warning">Aucun article à afficher</p>
                 </div>
-            
+    
+    
             {% endfor %}
             
             {# S'il y a des articles, on affiche le menu de pagination #}

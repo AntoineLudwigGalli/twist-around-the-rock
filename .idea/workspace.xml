@@ -6,29 +6,34 @@
   <component name="ChangeListManager">
     <list default="true" id="c8124d17-bec8-44a9-8087-9d264c3b8932" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/modules/Filter.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/modules/Filter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/fm_elfinder.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/fm_elfinder.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/fos_ckeditor.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/fos_ckeditor.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20221211102223.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/test1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/test2.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data/SearchData.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data/SearchData.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/AboutCarrouselImage.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/AboutCarrouselImage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/ArticleCarrouselImage.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/ArticleCarrouselImage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/CarrouselImages.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/CarrouselImages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/ProductCarrouselImage.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/ProductCarrouselImage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/AboutCarrouselImageFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/AboutCarrouselImageFormType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ArticleCarrouselImageFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ArticleCarrouselImageFormType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CarrouselImagesFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CarrouselImagesFormType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ProductCarrouselImageFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ProductCarrouselImageFormType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ProductFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ProductFormType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/SearchFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SearchFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ProductRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ProductRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/blog/publication_edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/blog/publication_edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/blog/publication_list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/blog/publication_list.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_panel/home.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_panel/home.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_panel/products-list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_panel/products-list.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/blog/list_search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/blog/list_search.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/blog/publication_view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/blog/publication_view.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/main/about.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/about.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/main/about_edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/about_edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main/contact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/contact.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main/edit_about_carousel_image.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/edit_about_carousel_image.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/main/home.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/home.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/partials/header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/partials/header.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/product/product_card.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/product_card.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/product/product_edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/product_edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/product/product_sorting.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/product_sorting.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/product/product_view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/product_view.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/product/products_list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/products_list.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,22 +180,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/antoine/Bureau/Dev/Projets terminés livrés/AuxoisFM",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "/snap/phpstorm/307/plugins/javascript-impl/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/antoine/Bureau/Dev/Projets terminés livrés/AuxoisFM&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/snap/phpstorm/307/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/config/packages" />
@@ -220,7 +225,9 @@
       <workItem from="1670679896212" duration="13367000" />
       <workItem from="1670745380691" duration="5396000" />
       <workItem from="1670754041261" duration="12461000" />
-      <workItem from="1670833482896" duration="16209000" />
+      <workItem from="1670833482896" duration="20273000" />
+      <workItem from="1670863125473" duration="892000" />
+      <workItem from="1671093894404" duration="6873000" />
     </task>
     <servers />
   </component>
@@ -237,17 +244,6 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/templates/product/product_view.html.twig</url>
-          <line>28</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

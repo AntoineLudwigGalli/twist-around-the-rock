@@ -128,6 +128,16 @@ class ProductFormType extends AbstractType
                     ])
                 ]
             ])
+            ->add('topProduct', ChoiceType::class, [
+                'label' => "Mettre le produit en page d'accueil ?",
+                'expanded' => true,
+                'multiple' => false, //expanded et multiple permettent d'avoir des boutons radio plutôt qu'un menu
+                // déroulant
+                'choices' => [
+                    'Oui' => "1",
+                    'Non' => "0",
+                ],
+            ])
             ->add('color', EntityType::class, [
                 'label' => 'Couleur du produit',
                 'class' => Color::class,

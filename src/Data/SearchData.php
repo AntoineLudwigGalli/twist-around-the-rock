@@ -44,6 +44,6 @@ class SearchData
     /**
      * @var boolean
      */
-    public bool $available = true;
+    public bool $available = false;
 
 }

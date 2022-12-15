@@ -23,20 +23,6 @@ class ProductCarrouselImageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'Nom de l\'image',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci de renseigner le nom de l\'image pour que le site soit accessible pour tous.'
-                    ]),
-                    new Length([
-                        'min' => 2,
-                        'max' => 255,
-                        'minMessage' => "Le nom de l\image doit contenir au minimum {{ limit }} caractères.",
-                        'maxMessage' => "Le nom de l\image doit contenir au maximum {{ limit }} caractères.",
-                    ])
-                ],
-            ])
             ->add('image', FileType::class, [
                 'mapped' => false,
                 'label' => 'Sélectionnez l\'image à ajouter au carrousel',

@@ -6,6 +6,7 @@ use App\Entity\About;
 use App\Entity\AboutCarrouselImage;
 use App\Entity\CarrouselImages;
 use App\Entity\DynamicContent;
+use App\Entity\Product;
 use App\Form\AboutCarrouselImageFormType;
 use App\Form\AboutFormType;
 use App\Form\DynamicContentFormType;
@@ -23,6 +24,9 @@ class MainController extends AbstractController
         $carrouselImagesRepo = $doctrine->getRepository(CarrouselImages::class);
         $carrouselImages = $carrouselImagesRepo->findAll();
 
+        $topProductsRepo = $doctrine->getRepository(Product::class);
+        $topProducts = $topProductsRepo->findBy(['topProduct'=> "1"]);
+
 // Affichage du dernier article de blog
         $requestedPage = $request->query->getInt('page', 1);
 
@@ -37,6 +41,7 @@ class MainController extends AbstractController
         return $this->render('main/home.html.twig', [
             'carrouselImages' => $carrouselImages,
             'articles' => $articles,
+            "topProducts" => $topProducts
 
         ]);
     }

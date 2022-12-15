@@ -58,6 +58,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductCarrouselImage::class, orphanRemoval: true)]
     private Collection $productCarrouselImages;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $topProduct = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -246,6 +249,18 @@ class Product
                 $productCarrouselImage->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isTopProduct(): ?bool
+    {
+        return $this->topProduct;
+    }
+
+    public function setTopProduct(?bool $topProduct): self
+    {
+        $this->topProduct = $topProduct;
 
         return $this;
     }

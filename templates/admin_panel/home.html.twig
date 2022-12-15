@@ -11,25 +11,18 @@
     <h2 class="col-12 text-center mt-3 text-light">Le site de Twist Around the Rock, c'est actuellement :</h2>
 </div>
 <div class="row d-md-flex flex-md-row justify-content-md-center align-items-md-center">
-    <div class="col-12 col-md-10 offset-md-1">
+    <div class="col-12 col-md-8 col-lg-6">
         <div class="row separation-row"></div>
         <div class="row d-flex flex-column justify-content-center align-items-center flex-md-row">
-            <div class="col-md-2 col-10 text-center">
                 <a href="{{ path('admin_carrousel_images_list') }}" class="admin-button mt-3 btn p-3">{{ carrouselImages.getTotalItemCount() }} images qui défilent en page d'accueil</a>
-            </div>
-            <div class="col-md-2 col-10 text-center">
                 <a href="{{ path('admin_products_list') }}" class="admin-button mt-3 btn p-3">{{ products.getTotalItemCount() }} produits référencés</a>
-            </div>
-            <div class="col-md-2 col-10 text-center">
                 <a href="{{ path('admin_blog_articles_list') }}" class="admin-button mt-3 btn p-3">{{ articles.getTotalItemCount() }} articles de blog</a>
-            </div>
           
         </div>
     </div>
 </div>
 <div class="row d-md-flex flex-md-row justify-content-md-center align-items-md-center mt-md-3">
-    <div class="col-10 offset-1 text-center">
-        <a href="#" class="mt-3 mb-3 mb-md-0 btn btn-danger p-3">Afficher toutes les données du site</a>
-    </div>
+
+        <a href="#" class="col-12 col-md-8 col-lg-6 mt-3 mb-3 mb-md-0 btn btn-danger p-3">Afficher toutes les données du site</a>
 
 {% endblock %}

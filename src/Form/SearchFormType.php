@@ -68,7 +68,7 @@ class SearchFormType extends AbstractType
             ])
 
             ->add('available', CheckboxType::class, [
-                'label' => 'Disponible',
+                'label' => 'Disponibles uniquement',
                 'required' => false,
             ])
 
