@@ -7,12 +7,13 @@
 {% endblock %}
 
 {% block body %}
+
 {#    Carrousel en banière #}
     <div class="owl-carousel owl-theme mt-5 mb-3">
         {% for carrouselImage in carrouselImages  %}
 {#            todo liipimagine pour normer les photos#}
             <a href="{{ (carrouselImage.link != null) ? carrouselImage.link : asset('images/carrousel_images/' ~ carrouselImage.image ) }}" {{ (carrouselImage.link != null) ? "" : 'target="_blank"' }} >
-                <img src="{{ asset('images/carrousel_images/' ~ carrouselImage.image) }}" alt="Image d'accueil" class="carrousel-img-home">
+                <img src="{{ glide_image("/carrousel_images/" ~ carrouselImage.image, 600, 400) }}" alt="Image d'accueil" class="carrousel-img-home">
             </a>
         {% endfor %}
     </div>
@@ -32,7 +33,7 @@
                 {% for topProduct in topProducts %}
                     <li class="col-8 offset-2 mx-0 my-3 text-center col-md-5 offset-md-1 col-lg-3">
                         <a href="{{ path('products_view', {'id': topProduct.id, 'slug': topProduct.slug}) }}" class="hoverwrap">
-                            <img src="{{ asset('images/product_images/' ~ topProduct.coverImage) }}" alt="Image de couverture du produit à la une {{ topProduct.name }}">
+                            <img src="{{ glide_image('/product_images/' ~ topProduct.coverImage, 400,200) }}" alt="Image de couverture du produit à la une {{ topProduct.name }}">
                             <h4 class="hovercap">{{ topProduct.name }}</h4>
                         </a>
                     </li>
@@ -50,7 +51,7 @@
                 {% if article.image != null %}
                     <a href="{{ path('blog_publication_view', {'id': article.id, 'slug': article.slug
                     }) }}" class="link-style">
-                        <img src="{{ asset('images/article_images/' ~ article.image) }}" alt="Image de couverture de l'article {{ article.title }}" class="article-image-thumbnail col-10 offset-1 img-fluid col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                        <img src="{{ glide_image('/article_images/' ~ article.image, 600, 400) }}" alt="Image de couverture de l'article {{ article.title }}" class="article-image-thumbnail col-10 offset-1 img-fluid col-md-8 offset-md-2 col-lg-6 offset-lg-3">
                     </a>
                 {% endif %}
             

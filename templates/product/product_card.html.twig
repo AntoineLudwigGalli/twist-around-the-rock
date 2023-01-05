@@ -6,7 +6,7 @@
             <a href="{{ path('products_view', {'id': product.id, 'slug': product.slug
             }) }}" class="link-style">
                 {% if product.coverImage != null %}
-                    <img src="{{ asset('images/product_images/' ~ product.coverImage) }}" alt="Image de couverture du produit {{ product.name }}" class="article-image-thumbnail img-fluid img-thumbnail">
+                    <img src="{{ glide_image('/product_images/' ~ product.coverImage, 400, 200) }}" alt="Image de couverture du produit {{ product.name }}" class="article-image-thumbnail img-fluid img-thumbnail">
                 {% endif %}
                 <h4>{{ product.name }}</h4>
                 {% if product.price %}

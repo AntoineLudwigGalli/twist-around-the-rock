@@ -26,7 +26,8 @@
                     </div>
                     
                     {% if product.coverImage != null %}
-                        <a href="{{ asset('images/product_images/' ~ product.coverImage) }}" target="_blank"><img src="{{ asset('images/product_images/' ~ product.coverImage) }}" alt="Image de couverture du produit {{ product.name }}" class="article-image col-10 offset-1 mb-4"></a>
+                        <a href="{{ asset('images/product_images/' ~ product.coverImage) }}" target="_blank">
+                            <img src="{{ glide_image('/product_images/' ~ product.coverImage, 1200, 800) }}" alt="Image de couverture du produit {{ product.name }}" class="article-image col-10 offset-1 mb-4"></a>
                     {% endif %}
                     
                     <div class="mb-2">
@@ -35,12 +36,13 @@
                 
                     <div class="d-flex flex-column align-items-center flex-lg-row justify-content-lg-between">
                         {% if product.illustrationImageLeft %}
-                            <a href="{{ asset('images/product_images/' ~ product.illustrationImageLeft) }}" target="_blank" class="me-lg-5"><img src="{{ asset('images/product_images/' ~ product.illustrationImageLeft) }}" alt="Image d'illustration du produit {{ product.name }}" class="article-image
+                            <a href="{{ asset('images/product_images/' ~ product.illustrationImageLeft) }}" target="_blank" class="me-lg-5"><img src="{{ glide_image('/product_images/' ~ product.illustrationImageLeft, 1200, 800) }}" alt="Image d'illustration du produit {{ product.name }}"
+                                        class="article-image
                             col-10
                             offset-1 mb-4"></a>
                         {% endif %}
                         {% if product.illustrationImageRight %}
-                            <a href="{{ asset('images/product_images/' ~ product.illustrationImageRight) }}" target="_blank" class="ms-lg-5"><img src="{{ asset('images/product_images/' ~ product.illustrationImageRight) }}" alt="Image d'illustration du produit {{ product.name }}"
+                            <a href="{{ asset('images/product_images/' ~ product.illustrationImageRight) }}" target="_blank" class="ms-lg-5"><img src="{{ glide_image('/product_images/' ~ product.illustrationImageRight, 1200, 800) }}" alt="Image d'illustration du produit {{ product.name }}"
                                         class="article-image col-10
                             offset-1 mb-4"></a>
                         {% endif %}
@@ -74,7 +76,7 @@
                             {% else %}
                                 <a href="{{ asset('images/product_carrousel_images/' ~ productCarrouselImage.image) }}" target="_blank">
                             {% endif %}
-                            <img src="{{ asset('images/product_carrousel_images/' ~ productCarrouselImage.image) }}" alt="Image d'illustration du produit {{ product.name }}" class="carrousel-img img-fluid">
+                            <img src="{{ glide_image('/product_carrousel_images/' ~ productCarrouselImage.image, 1200, 800) }}" alt="Image d'illustration du produit {{ product.name }}" class="carrousel-img img-fluid">
                             </a>
                             </a>
                         {% endfor %}

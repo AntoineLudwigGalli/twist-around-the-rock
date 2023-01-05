@@ -13,6 +13,24 @@ parameters:
   app.product.carrousel.image.folder: '%kernel.project_dir%/public/images/product_carrousel_images/'
   app.article.carrousel.image.folder: '%kernel.project_dir%/public/images/article_carrousel_images/'
 
+#  Stockage et cache des images pour Glide
+  app.public_dir: '%kernel.project_dir%/public/images'
+  app.image_cache_dir: '%kernel.project_dir%/var/storage/cache'
+  app.public_dir.carrousel_images: '%kernel.project_dir%/public/images/carrousel_images'
+  app.image_cache_dir.carrousel_images: '%kernel.project_dir%/var/storage/cache/images/carrousel_images'
+  app.public_dir.about_carrousel_images: '%kernel.project_dir%/public/images/about_carrousel_images'
+  app.image_cache_dir.about_carrousel_images: '%kernel.project_dir%/var/storage/cache/images/about_carrousel_images'
+  app.public_dir.about_images: '%kernel.project_dir%/public/images/about_images'
+  app.image_cache_dir.about_images: '%kernel.project_dir%/var/storage/cache/images/about_images'
+  app.public_dir.article_carrousel_images: '%kernel.project_dir%/public/images/article_carrousel_images'
+  app.image_cache_dir.article_carrousel_images: '%kernel.project_dir%/var/storage/cache/images/article_carrousel_images'
+  app.public_dir.article_images: '%kernel.project_dir%/public/images/article_images'
+  app.image_cache_dir.article_images: '%kernel.project_dir%/var/storage/cache/images/article_images'
+  app.public_dir.product_carrousel_images: '%kernel.project_dir%/public/images/product_carrousel_images'
+  app.image_cache_dir.product_carrousel_images: '%kernel.project_dir%/var/storage/cache/images/product_carrousel_images'
+  app.public_dir.product_images: '%kernel.project_dir%/public/images/product_images'
+  app.image_cache_dir.product_images: '%kernel.project_dir%/var/storage/cache/images/product_images'
+
 services:
     # default configuration for services in *this* file
     _defaults:

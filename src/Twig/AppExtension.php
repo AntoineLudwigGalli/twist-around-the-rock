@@ -3,8 +3,11 @@
 namespace App\Twig;
 
 use App\Entity\DynamicContent;
+use App\Services\ImagePathGenerator;
 use Doctrine\Persistence\ManagerRegistry;
 use HTMLPurifier;
+use League\Glide\Signatures\SignatureFactory;
+use League\Glide\Urls\UrlBuilderFactory;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -21,6 +24,8 @@ class AppExtension extends AbstractExtension
     private UrlGeneratorInterface $urlGenerator;
     private AuthorizationCheckerInterface $authenticateUser;
     private Security $security;
+    private \League\Glide\Urls\UrlBuilder $urlBuilder;
+    private string|array|false $signature;
 
 
     public function __construct(ManagerRegistry $doctrine, HTMLPurifier $purifier, UrlGeneratorInterface $urlGenerator, AuthorizationCheckerInterface $authenticateUser, Security $security)
@@ -30,7 +35,8 @@ class AppExtension extends AbstractExtension
         $this->urlGenerator = $urlGenerator;
         $this->authenticateUser = $authenticateUser;
         $this->security = $security;
-
+        $this->signature = getenv("GLIDE_KEY");
+        $this->urlBuilder = UrlBuilderFactory::create('/image/', $this->signature);
     }
 
     public function getFunctions(): array
@@ -39,7 +45,12 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFunction('display_dynamic_content', [$this, 'displayDynamicContent'], ['is_safe' => ['html']
                 ]),
+            new TwigFunction('glide_image', [$this, 'generate']),
         ];
+    }
+    public function generate($path, $width, $height): string
+    {
+        return $this->urlBuilder->getUrl($path, ['w' => $width, 'h'=> $height, 'fit' => "contain", 'fm' => 'webp', 'q'=> '75']);
     }
 
     public function displayDynamicContent(string $title): string

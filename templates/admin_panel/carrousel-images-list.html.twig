@@ -36,7 +36,7 @@
                             <table class="align-middle table table-sm table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th class="text-center" scope="col">{{ knp_pagination_sortable(carrouselImages, 'Nom ', 'ci.name') }}</th>
+                                       
                                         <th class="text-center" scope="col">{{ knp_pagination_sortable(carrouselImages, 'Article relié', 'ci.link') }}</th>
                                         <th class="text-center" scope="col">{{ knp_pagination_sortable(carrouselImages, 'Image', 'ci.image') }}</th>
                                     </tr>
@@ -45,10 +45,9 @@
                                 
                                 {% for carrouselImage in carrouselImages %}
                                     <tr>
-                                        <td class="text-light">{{ carrouselImage.name }}</td>
                                         <td class="text-light">{{ carrouselImage.link }}</td>
                                         <td>
-                                            <img src="{{ asset('images/carrousel_images/'~ carrouselImage.image) }}" alt="{{ carrouselImage.name }}" class="img-fluid img-thumbnail">
+                                            <img src="{{ asset('images/carrousel_images/'~ carrouselImage.image) }}" alt="Image du crrousel d'accueil" class="img-fluid img-thumbnail">
                                         </td>
                                         <td>
                                             <div>

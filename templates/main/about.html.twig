@@ -18,7 +18,7 @@
                         <h1 class="col-12 text-center my-5">{{ about.title }}</h1>
                     </div>
              
-                        <img src="{{ asset('images/about_images/' ~ about.coverImage) }}" alt="Image de couverture de {{ about.title }}" class="article-image col-10 offset-1 mb-4">
+                        <img src="{{ glide_image('/about_images/' ~ about.coverImage, 600, 400) }}" alt="Image de couverture de {{ about.title }}" class="article-image col-10 offset-1 mb-4">
            
                     
                     <div class="mb-2">
@@ -46,7 +46,7 @@
                         {% else %}
                             <a href="{{ asset('images/about_carrousel_images/' ~ aboutCarrouselImage.image) }}" target="_blank">
                         {% endif %}
-                        <img src="{{ asset('images/about_carrousel_images/' ~ aboutCarrouselImage.image) }}" alt="Image du carrousel de la section A propos/Twist" class="carrousel-img img-fluid">
+                        <img src="{{ glide_image('/about_carrousel_images/' ~ aboutCarrouselImage.image, 600, 400) }}" alt="Image du carrousel de la section A propos/Twist" class="carrousel-img img-fluid">
                             </a>
                         </a>
                     {% endfor %}

@@ -57,7 +57,7 @@
                         <a href="{{ path('blog_publication_view', {'id': article.id, 'slug': article.slug
                         }) }}" class="link-style">
                             {% if article.image != null %}
-                                <img src="{{ asset('images/article_images/' ~ article.image) }}" alt="Image de couverture de l'article {{ article.title }}" class="article-image-thumbnail img-fluid img-thumbnail">
+                                <img src="{{ glide_image('/article_images/' ~ article.image, 400, 200) }}" alt="Image de couverture de l'article {{ article.title }}" class="article-image-thumbnail img-fluid img-thumbnail">
                             {% endif %}
                             <h4>{{ article.title }}</h4>
                         </a>
