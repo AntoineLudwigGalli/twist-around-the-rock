@@ -2,14 +2,16 @@
 @font-face {
     font-family: "Dancing Script";
     src: url("../../public/fonts/DancingScript/DancingScript-VariableFont_wght.ttf");
+    font-display: swap;
 }
 @font-face {
     font-family: "Roboto";
     src: url("../../public/fonts/Roboto/Roboto-Regular.ttf");
+    font-display: swap;
 }
 
 body{
-    background-image: url("../../public/images/background.png");
+    background-image: url("../../public/images/background.webp");
     background-size: cover;
     background-attachment: fixed;
     font-family: "Dancing Script", Sans-Serif;
